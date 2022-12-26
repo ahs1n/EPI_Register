@@ -362,5 +362,6 @@
     <string name="invalid_password">Invalid Password</string>
     <string name="username_required">Username Required</string>
     <string name="incorrect_username_or_password">Incorrect Username Or Password</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

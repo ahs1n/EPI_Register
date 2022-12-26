@@ -1,5 +1,7 @@
 package edu.aku.hassannaqvi.epi_register.models;
 
+import static edu.aku.hassannaqvi.epi_register.core.MainApp._EMPTY_;
+
 import android.database.Cursor;
 import android.util.Log;
 
@@ -7,7 +9,6 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.PropertyChangeRegistry;
 
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,61 +23,61 @@ public class FormWR extends BaseObservable {
     // APP VARIABLES
     private String projectName = MainApp.PROJECT_NAME;
     // APP VARIABLES
-    private String id = StringUtils.EMPTY;
-    private String uid = StringUtils.EMPTY;
-    private String userName = StringUtils.EMPTY;
-    private String sysDate = StringUtils.EMPTY;
-    private String deviceId = StringUtils.EMPTY;
-    private String deviceTag = StringUtils.EMPTY;
-    private String appver = StringUtils.EMPTY;
-    private String startTime = StringUtils.EMPTY;
-    private String endTime = StringUtils.EMPTY;
-    private String iStatus = StringUtils.EMPTY;
-    private String iStatus96x = StringUtils.EMPTY;
-    private String synced = StringUtils.EMPTY;
-    private String syncDate = StringUtils.EMPTY;
+    private String id = _EMPTY_;
+    private String uid = _EMPTY_;
+    private String userName = _EMPTY_;
+    private String sysDate = _EMPTY_;
+    private String deviceId = _EMPTY_;
+    private String deviceTag = _EMPTY_;
+    private String appver = _EMPTY_;
+    private String startTime = _EMPTY_;
+    private String endTime = _EMPTY_;
+    private String iStatus = _EMPTY_;
+    private String iStatus96x = _EMPTY_;
+    private String synced = _EMPTY_;
+    private String syncDate = _EMPTY_;
 
     // FIELD VARIABLES
     // Section WR
-    private String wr_dmu_register = StringUtils.EMPTY;
-    private String wr_reg_number = StringUtils.EMPTY;
-    private String wr_page_number = StringUtils.EMPTY;
-    private String wr_rsno = StringUtils.EMPTY;
-    private String wr_card_number = StringUtils.EMPTY;
-    private String wr_women_name = StringUtils.EMPTY;
-    private String wr_husband_name = StringUtils.EMPTY;
-    private String wr_age_years = StringUtils.EMPTY;
-    private String wr_address = StringUtils.EMPTY;
-    private String wr_address_previous = StringUtils.EMPTY;
-    private String wr_phone = StringUtils.EMPTY;
-    private String wr_phone_na = StringUtils.EMPTY;
-    private String wr_ttd1 = StringUtils.EMPTY;
-    private String wr_ttd1ds = StringUtils.EMPTY;
-    private String wr_ttd1ds1 = StringUtils.EMPTY;
-    private String wr_ttd1ds2 = StringUtils.EMPTY;
-    private String wr_ttd1na = StringUtils.EMPTY;
-    private String wr_ttd2 = StringUtils.EMPTY;
-    private String wr_ttd2ds = StringUtils.EMPTY;
-    private String wr_ttd2ds1 = StringUtils.EMPTY;
-    private String wr_ttd2ds2 = StringUtils.EMPTY;
-    private String wr_ttd2na = StringUtils.EMPTY;
-    private String wr_ttd3 = StringUtils.EMPTY;
-    private String wr_ttd3ds = StringUtils.EMPTY;
-    private String wr_ttd3ds1 = StringUtils.EMPTY;
-    private String wr_ttd3ds2 = StringUtils.EMPTY;
-    private String wr_ttd3na = StringUtils.EMPTY;
-    private String wr_ttd4 = StringUtils.EMPTY;
-    private String wr_ttd4ds = StringUtils.EMPTY;
-    private String wr_ttd4ds1 = StringUtils.EMPTY;
-    private String wr_ttd4ds2 = StringUtils.EMPTY;
-    private String wr_ttd4na = StringUtils.EMPTY;
-    private String wr_ttd5 = StringUtils.EMPTY;
-    private String wr_ttd5ds = StringUtils.EMPTY;
-    private String wr_ttd5ds1 = StringUtils.EMPTY;
-    private String wr_ttd5ds2 = StringUtils.EMPTY;
-    private String wr_ttd5na = StringUtils.EMPTY;
-    private String wr_comments = StringUtils.EMPTY;
-    private String wR = StringUtils.EMPTY;
+    private String wr_dmu_register = _EMPTY_;
+    private String wr_reg_number = _EMPTY_;
+    private String wr_page_number = _EMPTY_;
+    private String wr_rsno = _EMPTY_;
+    private String wr_card_number = _EMPTY_;
+    private String wr_women_name = _EMPTY_;
+    private String wr_husband_name = _EMPTY_;
+    private String wr_age_years = _EMPTY_;
+    private String wr_address = _EMPTY_;
+    private String wr_address_previous = _EMPTY_;
+    private String wr_phone = _EMPTY_;
+    private String wr_phone_na = _EMPTY_;
+    private String wr_ttd1 = _EMPTY_;
+    private String wr_ttd1ds = _EMPTY_;
+    private String wr_ttd1ds1 = _EMPTY_;
+    private String wr_ttd1ds2 = _EMPTY_;
+    private String wr_ttd1na = _EMPTY_;
+    private String wr_ttd2 = _EMPTY_;
+    private String wr_ttd2ds = _EMPTY_;
+    private String wr_ttd2ds1 = _EMPTY_;
+    private String wr_ttd2ds2 = _EMPTY_;
+    private String wr_ttd2na = _EMPTY_;
+    private String wr_ttd3 = _EMPTY_;
+    private String wr_ttd3ds = _EMPTY_;
+    private String wr_ttd3ds1 = _EMPTY_;
+    private String wr_ttd3ds2 = _EMPTY_;
+    private String wr_ttd3na = _EMPTY_;
+    private String wr_ttd4 = _EMPTY_;
+    private String wr_ttd4ds = _EMPTY_;
+    private String wr_ttd4ds1 = _EMPTY_;
+    private String wr_ttd4ds2 = _EMPTY_;
+    private String wr_ttd4na = _EMPTY_;
+    private String wr_ttd5 = _EMPTY_;
+    private String wr_ttd5ds = _EMPTY_;
+    private String wr_ttd5ds1 = _EMPTY_;
+    private String wr_ttd5ds2 = _EMPTY_;
+    private String wr_ttd5na = _EMPTY_;
+    private String wr_comments = _EMPTY_;
+    private String wR = _EMPTY_;
 
 
     public String getProjectName() {

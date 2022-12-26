@@ -34,6 +34,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
+        <activity
+            android:name=".ui.LockActivity"
+            android:exported="true" />
+
 
         <activity
             android:name=".ui.LoginActivity"

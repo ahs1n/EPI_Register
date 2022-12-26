@@ -3,13 +3,18 @@ package edu.aku.hassannaqvi.epi_register.core;
 import static edu.aku.hassannaqvi.epi_register.database.CreateTable.DATABASE_NAME;
 import static edu.aku.hassannaqvi.epi_register.database.DatabaseHelper.DATABASE_PASSWORD;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +35,7 @@ import edu.aku.hassannaqvi.epi_register.R;
 import edu.aku.hassannaqvi.epi_register.models.FormCR;
 import edu.aku.hassannaqvi.epi_register.models.FormWR;
 import edu.aku.hassannaqvi.epi_register.models.Users;
+import edu.aku.hassannaqvi.epi_register.ui.LockActivity;
 
 
 public class MainApp extends Application {
@@ -49,6 +55,7 @@ public class MainApp extends Application {
     public static final String _APP_FOLDER = "../app/epi_register";
     private static final String TAG = "MainApp";
     public static int TRATS = 8;
+    public static final String _EMPTY_ = "";
     //COUNTRIES
     public static int PAKISTAN = 1;
     public static int TAJIKISTAN = 3;
@@ -86,6 +93,8 @@ public class MainApp extends Application {
     public static String crAddress;
     public static String wrAddress;
     public static String IBAHC = "";
+    public static CountDownTimer timer;
+    static ToneGenerator toneGen1;
 
 
     public static void hideSystemUI(View decorView) {
@@ -139,6 +148,44 @@ public class MainApp extends Application {
         });
     }
 
+    public static void lockScreen(Context c) {
+
+        if (timer != null) {
+            timer.cancel();
+        }
+
+        //   Context mContext = c;
+        Activity activity = (Activity) c;
+
+
+        timer = new CountDownTimer(15 * 60 * 1000, 1000) {
+            //timer = new CountDownTimer(30 * 1000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                //Some code
+                //bi.timeLeft.setText((millisUntilFinished / 1000) + " secs left");
+                if ((millisUntilFinished / 1000) < 14) {
+                    toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
+                }
+
+            }
+
+            public void onFinish() {
+                //Logout
+                //
+                //   finish();
+                // lockScreen();
+                Intent intent = new Intent();
+                intent.setClass(c, LockActivity.class);
+                c.startActivity(intent);
+                timer.cancel();
+                //  startActivity(new Intent(((Activity) c).getLocalClassName(), LockActivity.class));
+            }
+        };
+        timer.start();
+
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -161,6 +208,8 @@ public class MainApp extends Application {
         deviceid = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         initSecure();
+
+        toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
     }
 
     private void initSecure() {
