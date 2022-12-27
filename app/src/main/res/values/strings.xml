@@ -14,6 +14,8 @@
     <string name="upd_db_error"> Updating Database… ERROR! </string>
     <string name="oldPassword" translatable="false">Old Password</string>
     <string name="newPassword" translatable="false">New Password</string>
+    <string name="db_excp_error" translatable="false"> Database Exception... ERROR! </string>
+    <string name="upd_db" translatable="false"> Updating Database...\t </string>
 
     <string name="netwrok">Network connection not available!</string>
     <string name="invalidpass">Invalid Password</string>

@@ -61,6 +61,7 @@ public class MainApp extends Application {
     public static int TAJIKISTAN = 3;
     public static File sdDir;
     public static String[] downloadData;
+    public static boolean superuser;
     public static FormCR cr;
     public static FormWR wr;
     public static String DeviceURL = "devices.php";
