@@ -5,6 +5,7 @@ import static edu.aku.hassannaqvi.epi_register.core.MainApp.cr;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -27,13 +28,13 @@ import edu.aku.hassannaqvi.epi_register.contracts.TableContracts;
 import edu.aku.hassannaqvi.epi_register.core.MainApp;
 import edu.aku.hassannaqvi.epi_register.database.DatabaseHelper;
 import edu.aku.hassannaqvi.epi_register.databinding.ActivitySectionCrBinding;
-import edu.aku.hassannaqvi.epi_register.models.FormCR;
 
 public class SectionCRActivity extends AppCompatActivity {
     private static final String TAG = "SectionCRActivity";
     ActivitySectionCrBinding bi;
     String st = "";
     private DatabaseHelper db;
+    boolean b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +43,18 @@ public class SectionCRActivity extends AppCompatActivity {
         bi.setCallback(this);
         st = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime());
         setupSkips();
-/*        bi.setForm(form);
-        if (form == null) form = new Form();*/
-//        bi.setForm(form);
+//        bi.setForm(cr);
+        /*if (cr == null)
+            cr = new FormCR();*/
+        bi.setForm(cr);
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
         String dmuReg = getIntent().getStringExtra("dmureg");
         String reg = getIntent().getStringExtra("reg");
         bi.crDmuRegister.setText(dmuReg);
         bi.crRegNumber.setText(reg);
+        cr.setCr_dmu_register(dmuReg);
+        cr.setCr_reg_number(reg);
 
         if (MainApp.crAddress.trim().equals(""))
             bi.crAddressPrevious.setVisibility(View.GONE);
@@ -150,237 +154,61 @@ public class SectionCRActivity extends AppCompatActivity {
     }
 
 
-    private boolean insertRecord() {
-        DatabaseHelper db = MainApp.appInfo.getDbHelper();
+    private boolean insertNewRecord() {
+        if (!cr.getUid().equals("") || MainApp.superuser) return true;
+        MainApp.cr.populateMeta();
         long rowId = 0;
-
         try {
             rowId = db.addCR(cr);
-
-            if (rowId > 0) {
-                long updCount = 0;
-
-                cr.setId(String.valueOf(rowId));
-                cr.setUid(cr.getDeviceId() + cr.getId());
-
-                updCount = db.updateCrColumn(TableContracts.FormCRTable.COLUMN_UID, cr.getUid());
-
-                if (updCount > 0) {
-                    return true;
-                }
-
-            } else {
-                Toast.makeText(this, "Updating Database… ERROR!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this, "JSONException(CR):" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.db_excp_error, Toast.LENGTH_SHORT).show();
+            return false;
         }
+        MainApp.cr.setId(String.valueOf(rowId));
+        if (rowId > 0) {
+            MainApp.cr.setUid(MainApp.cr.getDeviceId() + MainApp.cr.getId());
+            db.updateCrColumn(TableContracts.FormCRTable.COLUMN_UID, MainApp.cr.getUid());
+            return true;
+        } else {
+            Toast.makeText(this, R.string.upd_db_error, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
 
-        return false;
+
+    private boolean updateDB() {
+        if (MainApp.superuser) return true;
+
+        db = MainApp.appInfo.getDbHelper();
+//        cr.setStartTime(st);
+        long updcount = 0;
+        try {
+            updcount = db.updateCrColumn(TableContracts.FormCRTable.COLUMN_CR, cr.cRtoString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d(TAG, R.string.upd_db + e.getMessage());
+            Toast.makeText(this, R.string.upd_db + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        if (updcount > 0) return true;
+        else {
+            Toast.makeText(this, R.string.upd_db_error, Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
 
     public void btnContinue(View view) {
         if (!formValidation()) return;
-        saveDraft();
-        if (insertRecord()) {
+        MainApp.crAddress = bi.crAddress.getText().toString();
+        cr.setStartTime(st);
+        if (!insertNewRecord()) return;
+        if (updateDB()) {
             finish();
             startActivity(new Intent(this, SectionCRActivity.class)
                     .putExtra("dmureg", bi.crDmuRegister.getText().toString())
-                    .putExtra("reg", bi.crRegNumber.getText().toString()));
+                    .putExtra("reg", bi.crRegNumber.getText().toString()).putExtra("b", false));
         } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
-    }
-
-
-    private void saveDraft() {
-        cr = new FormCR();
-        cr.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-        cr.setUserName(MainApp.user.getUserName());
-        cr.setDeviceId(MainApp.appInfo.getDeviceID());
-        cr.setDeviceTag(MainApp.appInfo.getTagName());
-        cr.setAppver(MainApp.appInfo.getAppVersion());
-        cr.setStartTime(st);
-        cr.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-
-        cr.setCr_dmu_register(bi.crDmuRegister.getText().toString());
-
-        cr.setCr_reg_number(bi.crRegNumber.getText().toString());
-        cr.setCr_page_number(bi.crPageNumber.getText().toString());
-        cr.setCr_rsno(bi.crRsno.getText().toString());
-        cr.setCr_card_number(bi.crCardNumber.getText().toString());
-        cr.setCr_child_name(bi.crChildName.getText().toString());
-        cr.setCr_father_name(bi.crFatherName.getText().toString());
-        cr.setCr_age_months(bi.crAgeMonths.getText().toString());
-
-        cr.setCr_age_years(bi.crAgeYears.getText().toString());
-
-        cr.setCr_age_days(bi.crAgeDays.getText().toString());
-
-        cr.setCr_gender(bi.crGender1.isChecked() ? "1"
-                : bi.crGender2.isChecked() ? "2"
-                : "-1");
-
-        cr.setCr_address(bi.crAddress.getText().toString());
-        MainApp.crAddress = bi.crAddress.getText().toString();
-
-        //cr.setCr_address(bi.crAddressPrevious.isChecked() ? "1" : "-1");
-
-        cr.setCr_phone(bi.crPhone.getText().toString());
-
-        cr.setCr_phone_na(bi.crPhoneNa.isChecked() ? "1" : "-1");
-
-        cr.setCr_bcg(bi.crBcg.getText().toString());
-
-        cr.setCr_bcg_d1(bi.crBcgD1.isChecked() ? "1" : "-1");
-
-        cr.setCr_bcg_d2(bi.crBcgD2.isChecked() ? "2" : "-1");
-
-        cr.setCr_bcg_na(bi.crBcgNa.isChecked() ? "97" : "-1");
-
-        cr.setCr_hep_b(bi.crHepB.getText().toString());
-
-        cr.setCr_hep_b1(bi.crHepB1.isChecked() ? "1" : "-1");
-
-        cr.setCr_hep_b2(bi.crHepB2.isChecked() ? "2" : "-1");
-
-        cr.setCr_hep_bna(bi.crHepBna.isChecked() ? "97" : "-1");
-
-        cr.setCr_opv0(bi.crOpv0.getText().toString());
-
-        cr.setCr_opv0_d1(bi.crOpv0D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_opv0_d2(bi.crOpv0D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_opv0_na(bi.crOpv0Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_opv1(bi.crOpv1.getText().toString());
-
-        cr.setCr_opv1_d1(bi.crOpv1D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_opv1_d2(bi.crOpv1D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_opv1_na(bi.crOpv1Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_opv2(bi.crOpv2.getText().toString());
-
-        cr.setCr_opv2_d1(bi.crOpv2D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_opv2_d2(bi.crOpv2D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_opv2_na(bi.crOpv2Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_opv3(bi.crOpv3.getText().toString());
-
-        cr.setCr_opv3_d1(bi.crOpv3D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_opv3_d2(bi.crOpv3D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_opv3_na(bi.crOpv3Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_rota1(bi.crRota1.getText().toString());
-
-        cr.setCr_rota1_d1(bi.crRota1D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_rota1_d2(bi.crRota1D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_rota1_na(bi.crRota1Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_rota2(bi.crRota2.getText().toString());
-
-        cr.setCr_rota2_d1(bi.crRota2D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_rota2_d2(bi.crRota2D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_rota2_na(bi.crRota2Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_ipv(bi.crIpv.getText().toString());
-
-        cr.setCr_ipv_d1(bi.crIpvD1.isChecked() ? "1" : "-1");
-
-        cr.setCr_ipv_d2(bi.crIpvD2.isChecked() ? "2" : "-1");
-
-        cr.setCr_ipv_na(bi.crIpvNa.isChecked() ? "97" : "-1");
-
-        cr.setCr_pcv1(bi.crPcv1.getText().toString());
-
-        cr.setCr_pcv1_d1(bi.crPcv1D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_pcv1_d2(bi.crPcv1D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_pcv1_na(bi.crPcv1Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_pcv2(bi.crPcv2.getText().toString());
-
-        cr.setCr_pcv2_d1(bi.crPcv2D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_pcv2_d1(bi.crPcv2D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_pcv2_na(bi.crPcv2Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_pcv3(bi.crPcv3.getText().toString());
-
-        cr.setCr_pcv3_d1(bi.crPcv3D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_pcv3_d2(bi.crPcv3D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_pcv3_na(bi.crPcv3Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_penta1(bi.crPenta1.getText().toString());
-
-        cr.setCr_penta1_d1(bi.crPenta1D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_penta1_d2(bi.crPenta1D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_penta1_na(bi.crPenta1Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_penta2(bi.crPenta2.getText().toString());
-
-        cr.setCr_penta2_d1(bi.crPenta2D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_penta2_d2(bi.crPenta2D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_penta2_na(bi.crPenta2Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_penta3(bi.crPenta3.getText().toString());
-
-        cr.setCr_penta3_d1(bi.crPenta3D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_penta3_d2(bi.crPenta3D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_penta3_na(bi.crPenta3Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_measles1(bi.crMeasles1.getText().toString());
-
-        cr.setCr_measles1_d1(bi.crMeasles1D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_measles1_d2(bi.crMeasles1D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_measles1_na(bi.crMeasles1Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_measles2(bi.crMeasles2.getText().toString());
-
-        cr.setCr_measles2_d1(bi.crMeasles2D1.isChecked() ? "1" : "-1");
-
-        cr.setCr_measles2_d2(bi.crMeasles2D2.isChecked() ? "2" : "-1");
-
-        cr.setCr_measles2_na(bi.crMeasles2Na.isChecked() ? "97" : "-1");
-
-        cr.setCr_birth_status(bi.crBirthStatus1.isChecked() ? "1"
-                : bi.crBirthStatus2.isChecked() ? "2"
-                : bi.crBirthStatusNa.isChecked() ? "97"
-                : "-1");
-
-        cr.setCr_comments(bi.crComments.getText().toString());
-
-        try {
-            cr.setcR(cr.cRtoString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "JSONException(CR): " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
     }
 
 
@@ -407,5 +235,11 @@ public class SectionCRActivity extends AppCompatActivity {
         // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
         finish();
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MainApp.lockScreen(this);
     }
 }

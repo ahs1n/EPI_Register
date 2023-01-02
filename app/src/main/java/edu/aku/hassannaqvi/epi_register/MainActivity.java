@@ -15,6 +15,7 @@ import com.validatorcrawler.aliazaz.Validator;
 import edu.aku.hassannaqvi.epi_register.core.MainApp;
 import edu.aku.hassannaqvi.epi_register.database.AndroidManager;
 import edu.aku.hassannaqvi.epi_register.databinding.ActivityMainBinding;
+import edu.aku.hassannaqvi.epi_register.models.FormCR;
 import edu.aku.hassannaqvi.epi_register.ui.ChangePasswordActivity;
 import edu.aku.hassannaqvi.epi_register.ui.SyncActivity;
 import edu.aku.hassannaqvi.epi_register.ui.sections.SectionCRActivity;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
 
             case R.id.openChildForm:
-//                MainApp.cr = new FormCR();
+                MainApp.cr = new FormCR();
                 finish();
                 startActivity(new Intent(this, SectionCRActivity.class)
                         .putExtra("dmureg", bi.dmureg.getText().toString())

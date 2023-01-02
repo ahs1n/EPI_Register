@@ -5,9 +5,9 @@
 
         <import type="android.view.View" />
 
-        <!--        <variable
-                    name="form"
-                    type="edu.aku.hassannaqvi.epi_register.models.FormCR" />-->
+        <variable
+            name="form"
+            type="edu.aku.hassannaqvi.epi_register.models.FormCR" />
 
         <variable
             name="callback"
@@ -217,10 +217,11 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:hint="###"
                                 android:gravity="center"
+                                android:hint="###"
                                 android:inputType="number"
                                 android:maxLength="3"
+                                android:text="@={form.cr_page_number}"
                                 app:maxValue="500"
                                 app:minValue="1"
                                 app:type="range" />
@@ -230,10 +231,11 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:hint="####"
                                 android:gravity="center"
+                                android:hint="####"
                                 android:inputType="number"
                                 android:maxLength="4"
+                                android:text="@={form.cr_rsno}"
                                 app:maxValue="9999"
                                 app:minValue="1"
                                 app:type="range" />
@@ -244,9 +246,10 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890 "
-                                android:hint="######"
                                 android:gravity="center"
-                                android:maxLength="6" />
+                                android:hint="######"
+                                android:maxLength="6"
+                                android:text="@={form.cr_card_number}" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -294,7 +297,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
-                                android:hint="@string/cr_child_name" />
+                                android:hint="@string/cr_child_name"
+                                android:text="@={form.cr_child_name}" />
 
                             <EditText
                                 android:id="@+id/cr_father_name"
@@ -302,7 +306,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
-                                android:hint="@string/cr_father_name" />
+                                android:hint="@string/cr_father_name"
+                                android:text="@={form.cr_father_name}" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -399,6 +404,7 @@
                                 android:hint="##"
                                 android:inputType="number"
                                 android:maxLength="2"
+                                android:text="@={form.cr_age_days}"
                                 app:maxValue="30"
                                 app:minValue="0"
                                 app:type="range" />
@@ -412,6 +418,7 @@
                                 android:hint="##"
                                 android:inputType="number"
                                 android:maxLength="2"
+                                android:text="@={form.cr_age_months}"
                                 app:maxValue="60"
                                 app:minValue="0"
                                 app:type="range" />
@@ -425,6 +432,7 @@
                                 android:hint="##"
                                 android:inputType="number"
                                 android:maxLength="2"
+                                android:text="@={form.cr_age_years}"
                                 app:maxValue="5"
                                 app:minValue="0"
                                 app:type="range" />
@@ -462,8 +470,8 @@
                             <RadioGroup
                                 android:id="@+id/cr_gendercheck"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="horizontal">
 
                                 <RadioButton
@@ -471,6 +479,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:checked="@{form.cr_gender.equals(`1`)}"
+                                    android:onClick="@{()->form.setCr_gender(`1`)}"
                                     android:text="@string/cr_gender1" />
 
                                 <RadioButton
@@ -478,6 +488,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:checked="@{form.cr_gender.equals(`2`)}"
+                                    android:onClick="@{()->form.setCr_gender(`2`)}"
                                     android:text="@string/cr_gender2" />
                             </RadioGroup>
                         </LinearLayout>
@@ -521,7 +533,8 @@
                                 android:gravity="top"
                                 android:hint="@string/cr_address"
                                 android:lines="5"
-                                android:minLines="5" />
+                                android:minLines="5"
+                                android:text="@={form.cr_address}" />
 
                             <CheckBox
                                 android:id="@+id/cr_address_previous"
@@ -529,6 +542,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="bottom"
                                 android:backgroundTint="@color/lightPink"
+                                android:checked="@{form.cr_address_previous.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_address_previous(form.cr_address_previous.equals(`1`)?``:`1`)}"
                                 android:tag="-1"
                                 android:text="@string/cr_address_previous"
                                 android:textColor="@color/redDark" />
@@ -573,6 +588,7 @@
                                 android:hint="@string/cr_phone"
                                 android:inputType="number"
                                 android:maxLength="11"
+                                android:text="@={form.cr_phone}"
                                 app:maxValue="99999999999"
                                 app:minValue="1"
                                 app:type="range" />
@@ -582,6 +598,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/lightPink"
+                                android:checked="@{form.cr_phone_na.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_phone_na(form.cr_phone_na.equals(`1`)?``:`1`)}"
                                 android:tag="-1"
                                 android:text="@string/cr_phone_na"
                                 android:textColor="@color/redDark" />
@@ -608,8 +626,8 @@
 
                             <TextView
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:text="@string/cr_bcg" />
 
                             <com.edittextpicker.aliazaz.EditTextPicker
@@ -621,6 +639,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_bcg}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
 
@@ -643,18 +662,24 @@
                                     android:id="@+id/cr_bcg_d1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:checked="@{form.cr_bcg_d1.equals(`1`)}"
+                                    android:onClick="@{()->form.setCr_bcg_d1(form.cr_bcg_d1.equals(`1`)?``:`1`)}"
                                     android:text="@string/cr_bcg_d1" />
 
                                 <CheckBox
                                     android:id="@+id/cr_bcg_d2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:checked="@{form.cr_bcg_d2.equals(`2`)}"
+                                    android:onClick="@{()->form.setCr_bcg_d2(form.cr_bcg_d2.equals(`2`)?``:`2`)}"
                                     android:text="@string/cr_bcg_d2" />
 
                                 <CheckBox
                                     android:id="@+id/cr_bcg_na"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:checked="@{form.cr_bcg_na.equals(`97`)}"
+                                    android:onClick="@{()->form.setCr_bcg_na(form.cr_bcg_na.equals(`97`)?``:`97`)}"
                                     android:text="@string/nap" />
 
                             </LinearLayout>
@@ -696,6 +721,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_hep_b}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -712,18 +738,24 @@
                                 android:id="@+id/cr_hep_b1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_hep_b1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_hep_b1(form.cr_hep_b1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_hep_b1" />
 
                             <CheckBox
                                 android:id="@+id/cr_hep_b2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_hep_b2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_hep_b2(form.cr_hep_b2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_hep_b2" />
 
                             <CheckBox
                                 android:id="@+id/cr_hep_bna"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_hep_bna.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_hep_bna(form.cr_hep_bna.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -760,6 +792,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_opv0}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -776,18 +809,24 @@
                                 android:id="@+id/cr_opv0_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv0_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_opv0_d1(form.cr_opv0_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_opv0_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_opv0_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv0_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_opv0_d2(form.cr_opv0_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_opv0_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_opv0_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv0_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_opv0_na(form.cr_opv0_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -825,6 +864,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_opv1}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -841,18 +881,24 @@
                                 android:id="@+id/cr_opv1_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv1_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_opv1_d1(form.cr_opv1_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_opv1_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_opv1_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv1_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_opv1_d2(form.cr_opv1_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_opv1_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_opv1_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv1_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_opv1_na(form.cr_opv1_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -890,6 +936,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_opv2}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -906,18 +953,24 @@
                                 android:id="@+id/cr_opv2_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv2_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_opv2_d1(form.cr_opv2_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_opv2_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_opv2_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv2_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_opv2_d2(form.cr_opv2_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_opv2_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_opv2_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv2_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_opv2_na(form.cr_opv2_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -954,6 +1007,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_opv3}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -970,18 +1024,24 @@
                                 android:id="@+id/cr_opv3_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv3_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_opv3_d1(form.cr_opv3_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_opv3_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_opv3_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv3_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_opv3_d2(form.cr_opv3_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_opv3_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_opv3_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_opv3_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_opv3_na(form.cr_opv3_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1018,6 +1078,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_rota1}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -1034,18 +1095,24 @@
                                 android:id="@+id/cr_rota1_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_rota1_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_rota1_d1(form.cr_rota1_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_rota1_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_rota1_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_rota1_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_rota1_d2(form.cr_rota1_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_rota1_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_rota1_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_rota1_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_rota1_na(form.cr_rota1_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1082,6 +1149,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_rota2}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -1098,18 +1166,24 @@
                                 android:id="@+id/cr_rota2_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_rota2_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_rota2_d1(form.cr_rota2_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_rota2_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_rota2_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_rota2_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_rota2_d2(form.cr_rota2_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_rota2_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_rota2_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_rota2_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_rota2_na(form.cr_rota2_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1146,6 +1220,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_ipv}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -1162,18 +1237,24 @@
                                 android:id="@+id/cr_ipv_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_ipv_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_ipv_d1(form.cr_ipv_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_ipv_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_ipv_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_ipv_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_ipv_d2(form.cr_ipv_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_ipv_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_ipv_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_ipv_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_ipv_na(form.cr_ipv_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1210,6 +1291,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_pcv1}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -1226,18 +1308,24 @@
                                 android:id="@+id/cr_pcv1_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_pcv1_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_pcv1_d1(form.cr_pcv1_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_pcv1_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_pcv1_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_pcv1_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_pcv1_d2(form.cr_pcv1_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_pcv1_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_pcv1_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_pcv1_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_pcv1_na(form.cr_pcv1_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1274,6 +1362,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_pcv2}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -1290,18 +1379,24 @@
                                 android:id="@+id/cr_pcv2_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_pcv2_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_pcv2_d1(form.cr_pcv2_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_pcv2_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_pcv2_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_pcv2_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_pcv2_d2(form.cr_pcv2_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_pcv2_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_pcv2_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_pcv2_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_pcv2_na(form.cr_pcv2_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1338,6 +1433,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_pcv3}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -1354,18 +1450,24 @@
                                 android:id="@+id/cr_pcv3_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_pcv3_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_pcv3_d1(form.cr_pcv3_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_pcv3_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_pcv3_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_pcv3_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_pcv3_d2(form.cr_pcv3_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_pcv3_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_pcv3_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_pcv3_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_pcv3_na(form.cr_pcv3_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1403,6 +1505,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_penta1}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -1419,18 +1522,24 @@
                                 android:id="@+id/cr_penta1_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_penta1_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_penta1_d1(form.cr_penta1_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_penta1_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_penta1_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_penta1_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_penta1_d2(form.cr_penta1_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_penta1_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_penta1_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_penta1_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_penta1_na(form.cr_penta1_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1468,6 +1577,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_penta2}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -1484,18 +1594,24 @@
                                 android:id="@+id/cr_penta2_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_penta2_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_penta2_d1(form.cr_penta2_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_penta2_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_penta2_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_penta2_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_penta2_d2(form.cr_penta2_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_penta2_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_penta2_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_penta2_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_penta2_na(form.cr_penta2_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1533,6 +1649,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_penta3}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -1549,18 +1666,24 @@
                                 android:id="@+id/cr_penta3_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_penta3_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_penta3_d1(form.cr_penta3_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_penta3_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_penta3_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_penta3_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_penta3_d2(form.cr_penta3_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_penta3_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_penta3_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_penta3_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_penta3_na(form.cr_penta3_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1598,6 +1721,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_measles1}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -1614,18 +1738,24 @@
                                 android:id="@+id/cr_measles1_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_measles1_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_measles1_d1(form.cr_measles1_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_measles1_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_measles1_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_measles1_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_measles1_d2(form.cr_measles1_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_measles1_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_measles1_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_measles1_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_measles1_na(form.cr_measles1_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1663,6 +1793,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.cr_measles2}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -1679,18 +1810,24 @@
                                 android:id="@+id/cr_measles2_d1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_measles2_d1.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_measles2_d1(form.cr_measles2_d1.equals(`1`)?``:`1`)}"
                                 android:text="@string/cr_measles2_d1" />
 
                             <CheckBox
                                 android:id="@+id/cr_measles2_d2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_measles2_d2.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_measles2_d2(form.cr_measles2_d2.equals(`2`)?``:`2`)}"
                                 android:text="@string/cr_measles2_d2" />
 
                             <CheckBox
                                 android:id="@+id/cr_measles2_na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.cr_measles2_na.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_measles2_na(form.cr_measles2_na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
                     </LinearLayout>
@@ -1731,6 +1868,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:checked="@{form.cr_birth_status.equals(`1`)}"
+                                android:onClick="@{()->form.setCr_birth_status(`1`)}"
                                 android:text="@string/cr_birth_status1" />
 
                             <RadioButton
@@ -1738,6 +1877,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:checked="@{form.cr_birth_status.equals(`2`)}"
+                                android:onClick="@{()->form.setCr_birth_status(`2`)}"
                                 android:text="@string/cr_birth_status2" />
 
                             <RadioButton
@@ -1745,6 +1886,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:checked="@{form.cr_birth_status.equals(`97`)}"
+                                android:onClick="@{()->form.setCr_birth_status(`97`)}"
                                 android:text="@string/cr_birth_status_na" />
 
                         </RadioGroup>
@@ -1785,7 +1928,8 @@
                             android:hint="@string/cr_comments"
                             android:lines="5"
                             android:minLines="5"
-                            android:tag="-1" />
+                            android:tag="-1"
+                            android:text="@={form.cr_comments}" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

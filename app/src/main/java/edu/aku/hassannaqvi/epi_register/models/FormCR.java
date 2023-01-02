@@ -1,5 +1,6 @@
 package edu.aku.hassannaqvi.epi_register.models;
 
+import static edu.aku.hassannaqvi.epi_register.core.MainApp.PROJECT_NAME;
 import static edu.aku.hassannaqvi.epi_register.core.MainApp._EMPTY_;
 
 import android.database.Cursor;
@@ -12,6 +13,10 @@ import androidx.databinding.PropertyChangeRegistry;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import edu.aku.hassannaqvi.epi_register.BR;
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.FormCRTable;
 import edu.aku.hassannaqvi.epi_register.core.MainApp;
@@ -21,7 +26,7 @@ public class FormCR extends BaseObservable {
     private final String TAG = "FormCR";
     private final transient PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
     // APP VARIABLES
-    private String projectName = MainApp.PROJECT_NAME;
+    private String projectName = PROJECT_NAME;
     // APP VARIABLES
     private String id = _EMPTY_;
     private String uid = _EMPTY_;
@@ -144,6 +149,22 @@ public class FormCR extends BaseObservable {
     private String cr_birth_status = _EMPTY_;
     private String cr_comments = _EMPTY_;
     private String cR = _EMPTY_;
+
+
+    public void populateMeta() {
+
+        setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        setUserName(MainApp.user.getUserName());
+        setDeviceId(MainApp.deviceid);
+        setDeviceTag(MainApp.appInfo.getTagName());
+        setAppver(MainApp.appInfo.getAppVersion());
+        setProjectName(PROJECT_NAME);
+        setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+
+//        setCr_dmu_register(MainApp.cr.cr_dmu_register);
+//        setCr_reg_number(MainApp.cr.cr_reg_number);
+
+    }
 
 
     public String getProjectName() {
@@ -401,6 +422,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_address_previous(String cr_address_previous) {
+        if (this.cr_address_previous.equals(cr_address_previous)) return; // for all checkboxes
         this.cr_address_previous = cr_address_previous;
         notifyPropertyChanged(BR.cr_address_previous);
     }
@@ -421,6 +443,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_phone_na(String cr_phone_na) {
+        if (this.cr_phone_na.equals(cr_phone_na)) return; // for all checkboxes
         this.cr_phone_na = cr_phone_na;
         notifyPropertyChanged(BR.cr_phone_na);
     }
@@ -451,6 +474,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_bcg_d1(String cr_bcg_d1) {
+        if (this.cr_bcg_d1.equals(cr_bcg_d1)) return; // for all checkboxes
         this.cr_bcg_d1 = cr_bcg_d1;
         notifyPropertyChanged(BR.cr_bcg_d1);
     }
@@ -461,6 +485,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_bcg_d2(String cr_bcg_d2) {
+        if (this.cr_bcg_d2.equals(cr_bcg_d2)) return; // for all checkboxes
         this.cr_bcg_d2 = cr_bcg_d2;
         notifyPropertyChanged(BR.cr_bcg_d2);
     }
@@ -491,6 +516,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_hep_b1(String cr_hep_b1) {
+        if (this.cr_hep_b1.equals(cr_hep_b1)) return; // for all checkboxes
         this.cr_hep_b1 = cr_hep_b1;
         notifyPropertyChanged(BR.cr_hep_b1);
     }
@@ -501,6 +527,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_hep_b2(String cr_hep_b2) {
+        if (this.cr_hep_b2.equals(cr_hep_b2)) return; // for all checkboxes
         this.cr_hep_b2 = cr_hep_b2;
         notifyPropertyChanged(BR.cr_hep_b2);
     }
@@ -531,6 +558,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv0_d1(String cr_opv0_d1) {
+        if (this.cr_opv0_d1.equals(cr_opv0_d1)) return; // for all checkboxes
         this.cr_opv0_d1 = cr_opv0_d1;
         notifyPropertyChanged(BR.cr_opv0_d1);
     }
@@ -541,6 +569,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv0_d2(String cr_opv0_d2) {
+        if (this.cr_opv0_d2.equals(cr_opv0_d2)) return; // for all checkboxes
         this.cr_opv0_d2 = cr_opv0_d2;
         notifyPropertyChanged(BR.cr_opv0_d2);
     }
@@ -571,6 +600,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv1_d1(String cr_opv1_d1) {
+        if (this.cr_opv1_d1.equals(cr_opv1_d1)) return; // for all checkboxes
         this.cr_opv1_d1 = cr_opv1_d1;
         notifyPropertyChanged(BR.cr_opv1_d1);
     }
@@ -581,6 +611,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv1_d2(String cr_opv1_d2) {
+        if (this.cr_opv1_d2.equals(cr_opv1_d2)) return; // for all checkboxes
         this.cr_opv1_d2 = cr_opv1_d2;
         notifyPropertyChanged(BR.cr_opv1_d2);
     }
@@ -611,6 +642,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv2_d1(String cr_opv2_d1) {
+        if (this.cr_opv2_d1.equals(cr_opv2_d1)) return; // for all checkboxes
         this.cr_opv2_d1 = cr_opv2_d1;
         notifyPropertyChanged(BR.cr_opv2_d1);
     }
@@ -621,6 +653,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv2_d2(String cr_opv2_d2) {
+        if (this.cr_opv2_d2.equals(cr_opv2_d2)) return; // for all checkboxes
         this.cr_opv2_d2 = cr_opv2_d2;
         notifyPropertyChanged(BR.cr_opv2_d2);
     }
@@ -651,6 +684,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv3_d1(String cr_opv3_d1) {
+        if (this.cr_opv3_d1.equals(cr_opv3_d1)) return; // for all checkboxes
         this.cr_opv3_d1 = cr_opv3_d1;
         notifyPropertyChanged(BR.cr_opv3_d1);
     }
@@ -661,6 +695,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv3_d2(String cr_opv3_d2) {
+        if (this.cr_opv3_d2.equals(cr_opv3_d2)) return; // for all checkboxes
         this.cr_opv3_d2 = cr_opv3_d2;
         notifyPropertyChanged(BR.cr_opv3_d2);
     }
@@ -691,6 +726,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_rota1_d1(String cr_rota1_d1) {
+        if (this.cr_rota1_d1.equals(cr_rota1_d1)) return; // for all checkboxes
         this.cr_rota1_d1 = cr_rota1_d1;
         notifyPropertyChanged(BR.cr_rota1_d1);
     }
@@ -701,6 +737,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_rota1_d2(String cr_rota1_d2) {
+        if (this.cr_rota1_d2.equals(cr_rota1_d2)) return; // for all checkboxes
         this.cr_rota1_d2 = cr_rota1_d2;
         notifyPropertyChanged(BR.cr_rota1_d2);
     }
@@ -731,6 +768,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_rota2_d1(String cr_rota2_d1) {
+        if (this.cr_rota2_d1.equals(cr_rota2_d1)) return; // for all checkboxes
         this.cr_rota2_d1 = cr_rota2_d1;
         notifyPropertyChanged(BR.cr_rota2_d1);
     }
@@ -741,6 +779,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_rota2_d2(String cr_rota2_d2) {
+        if (this.cr_rota2_d2.equals(cr_rota2_d2)) return; // for all checkboxes
         this.cr_rota2_d2 = cr_rota2_d2;
         notifyPropertyChanged(BR.cr_rota2_d2);
     }
@@ -771,6 +810,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_ipv_d1(String cr_ipv_d1) {
+        if (this.cr_ipv_d1.equals(cr_ipv_d1)) return; // for all checkboxes
         this.cr_ipv_d1 = cr_ipv_d1;
         notifyPropertyChanged(BR.cr_ipv_d1);
     }
@@ -781,6 +821,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_ipv_d2(String cr_ipv_d2) {
+        if (this.cr_ipv_d2.equals(cr_ipv_d2)) return; // for all checkboxes
         this.cr_ipv_d2 = cr_ipv_d2;
         notifyPropertyChanged(BR.cr_ipv_d2);
     }
@@ -811,6 +852,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_pcv1_d1(String cr_pcv1_d1) {
+        if (this.cr_pcv1_d1.equals(cr_pcv1_d1)) return; // for all checkboxes
         this.cr_pcv1_d1 = cr_pcv1_d1;
         notifyPropertyChanged(BR.cr_pcv1_d1);
     }
@@ -821,6 +863,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_pcv1_d2(String cr_pcv1_d2) {
+        if (this.cr_pcv1_d2.equals(cr_pcv1_d2)) return; // for all checkboxes
         this.cr_pcv1_d2 = cr_pcv1_d2;
         notifyPropertyChanged(BR.cr_pcv1_d2);
     }
@@ -851,6 +894,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_pcv2_d1(String cr_pcv2_d1) {
+        if (this.cr_pcv2_d1.equals(cr_pcv2_d1)) return; // for all checkboxes
         this.cr_pcv2_d1 = cr_pcv2_d1;
         notifyPropertyChanged(BR.cr_pcv2_d1);
     }
@@ -861,6 +905,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_pcv2_d2(String cr_pcv2_d2) {
+        if (this.cr_pcv2_d2.equals(cr_pcv2_d2)) return; // for all checkboxes
         this.cr_pcv2_d2 = cr_pcv2_d2;
         notifyPropertyChanged(BR.cr_pcv2_d2);
     }
@@ -891,6 +936,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_pcv3_d1(String cr_pcv3_d1) {
+        if (this.cr_pcv3_d1.equals(cr_pcv3_d1)) return; // for all checkboxes
         this.cr_pcv3_d1 = cr_pcv3_d1;
         notifyPropertyChanged(BR.cr_pcv3_d1);
     }
@@ -901,6 +947,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_pcv3_d2(String cr_pcv3_d2) {
+        if (this.cr_pcv3_d2.equals(cr_pcv3_d2)) return; // for all checkboxes
         this.cr_pcv3_d2 = cr_pcv3_d2;
         notifyPropertyChanged(BR.cr_pcv3_d2);
     }
@@ -931,6 +978,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_penta1_d1(String cr_penta1_d1) {
+        if (this.cr_penta1_d1.equals(cr_penta1_d1)) return; // for all checkboxes
         this.cr_penta1_d1 = cr_penta1_d1;
         notifyPropertyChanged(BR.cr_penta1_d1);
     }
@@ -941,6 +989,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_penta1_d2(String cr_penta1_d2) {
+        if (this.cr_penta1_d2.equals(cr_penta1_d2)) return; // for all checkboxes
         this.cr_penta1_d2 = cr_penta1_d2;
         notifyPropertyChanged(BR.cr_penta1_d2);
     }
@@ -971,6 +1020,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_penta2_d1(String cr_penta2_d1) {
+        if (this.cr_penta2_d1.equals(cr_penta2_d1)) return; // for all checkboxes
         this.cr_penta2_d1 = cr_penta2_d1;
         notifyPropertyChanged(BR.cr_penta2_d1);
     }
@@ -981,6 +1031,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_penta2_d2(String cr_penta2_d2) {
+        if (this.cr_penta2_d2.equals(cr_penta2_d2)) return; // for all checkboxes
         this.cr_penta2_d2 = cr_penta2_d2;
         notifyPropertyChanged(BR.cr_penta2_d2);
     }
@@ -1011,6 +1062,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_penta3_d1(String cr_penta3_d1) {
+        if (this.cr_penta3_d1.equals(cr_penta3_d1)) return; // for all checkboxes
         this.cr_penta3_d1 = cr_penta3_d1;
         notifyPropertyChanged(BR.cr_penta3_d1);
     }
@@ -1021,6 +1073,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_penta3_d2(String cr_penta3_d2) {
+        if (this.cr_penta3_d2.equals(cr_penta3_d2)) return; // for all checkboxes
         this.cr_penta3_d2 = cr_penta3_d2;
         notifyPropertyChanged(BR.cr_penta3_d2);
     }
@@ -1051,6 +1104,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_measles1_d1(String cr_measles1_d1) {
+        if (this.cr_measles1_d1.equals(cr_measles1_d1)) return; // for all checkboxes
         this.cr_measles1_d1 = cr_measles1_d1;
         notifyPropertyChanged(BR.cr_measles1_d1);
     }
@@ -1061,6 +1115,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_measles1_d2(String cr_measles1_d2) {
+        if (this.cr_measles1_d2.equals(cr_measles1_d2)) return; // for all checkboxes
         this.cr_measles1_d2 = cr_measles1_d2;
         notifyPropertyChanged(BR.cr_measles1_d2);
     }
@@ -1091,6 +1146,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_measles2_d1(String cr_measles2_d1) {
+        if (this.cr_measles2_d1.equals(cr_measles2_d1)) return; // for all checkboxes
         this.cr_measles2_d1 = cr_measles2_d1;
         notifyPropertyChanged(BR.cr_measles2_d1);
     }
@@ -1101,6 +1157,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_measles2_d2(String cr_measles2_d2) {
+        if (this.cr_measles2_d2.equals(cr_measles2_d2)) return; // for all checkboxes
         this.cr_measles2_d2 = cr_measles2_d2;
         notifyPropertyChanged(BR.cr_measles2_d2);
     }
@@ -1131,6 +1188,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_bcg_na(String cr_bcg_na) {
+        if (this.cr_bcg_na.equals(cr_bcg_na)) return; // for all checkboxes
         this.cr_bcg_na = cr_bcg_na;
         notifyPropertyChanged(BR.cr_bcg_na);
     }
@@ -1141,6 +1199,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_hep_bna(String cr_hep_bna) {
+        if (this.cr_hep_bna.equals(cr_hep_bna)) return; // for all checkboxes
         this.cr_hep_bna = cr_hep_bna;
         notifyPropertyChanged(BR.cr_hep_bna);
     }
@@ -1151,6 +1210,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv0_na(String cr_opv0_na) {
+        if (this.cr_opv0_na.equals(cr_opv0_na)) return; // for all checkboxes
         this.cr_opv0_na = cr_opv0_na;
         notifyPropertyChanged(BR.cr_opv0_na);
     }
@@ -1161,6 +1221,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv1_na(String cr_opv1_na) {
+        if (this.cr_opv1_na.equals(cr_opv1_na)) return; // for all checkboxes
         this.cr_opv1_na = cr_opv1_na;
         notifyPropertyChanged(BR.cr_opv1_na);
     }
@@ -1171,6 +1232,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv2_na(String cr_opv2_na) {
+        if (this.cr_opv2_na.equals(cr_opv2_na)) return; // for all checkboxes
         this.cr_opv2_na = cr_opv2_na;
         notifyPropertyChanged(BR.cr_opv2_na);
     }
@@ -1181,6 +1243,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_opv3_na(String cr_opv3_na) {
+        if (this.cr_opv3_na.equals(cr_opv3_na)) return; // for all checkboxes
         this.cr_opv3_na = cr_opv3_na;
         notifyPropertyChanged(BR.cr_opv3_na);
     }
@@ -1191,6 +1254,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_rota1_na(String cr_rota1_na) {
+        if (this.cr_rota1_na.equals(cr_rota1_na)) return; // for all checkboxes
         this.cr_rota1_na = cr_rota1_na;
         notifyPropertyChanged(BR.cr_rota1_na);
     }
@@ -1201,6 +1265,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_rota2_na(String cr_rota2_na) {
+        if (this.cr_rota2_na.equals(cr_rota2_na)) return; // for all checkboxes
         this.cr_rota2_na = cr_rota2_na;
         notifyPropertyChanged(BR.cr_rota2_na);
     }
@@ -1211,6 +1276,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_ipv_na(String cr_ipv_na) {
+        if (this.cr_ipv_na.equals(cr_ipv_na)) return; // for all checkboxes
         this.cr_ipv_na = cr_ipv_na;
         notifyPropertyChanged(BR.cr_ipv_na);
     }
@@ -1221,6 +1287,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_pcv1_na(String cr_pcv1_na) {
+        if (this.cr_pcv1_na.equals(cr_pcv1_na)) return; // for all checkboxes
         this.cr_pcv1_na = cr_pcv1_na;
         notifyPropertyChanged(BR.cr_pcv1_na);
     }
@@ -1231,6 +1298,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_pcv2_na(String cr_pcv2_na) {
+        if (this.cr_pcv2_na.equals(cr_pcv2_na)) return; // for all checkboxes
         this.cr_pcv2_na = cr_pcv2_na;
         notifyPropertyChanged(BR.cr_pcv2_na);
     }
@@ -1241,6 +1309,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_pcv3_na(String cr_pcv3_na) {
+        if (this.cr_pcv3_na.equals(cr_pcv3_na)) return; // for all checkboxes
         this.cr_pcv3_na = cr_pcv3_na;
         notifyPropertyChanged(BR.cr_pcv3_na);
     }
@@ -1251,6 +1320,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_penta1_na(String cr_penta1_na) {
+        if (this.cr_penta1_na.equals(cr_penta1_na)) return; // for all checkboxes
         this.cr_penta1_na = cr_penta1_na;
         notifyPropertyChanged(BR.cr_penta1_na);
     }
@@ -1261,6 +1331,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_penta2_na(String cr_penta2_na) {
+        if (this.cr_penta2_na.equals(cr_penta2_na)) return; // for all checkboxes
         this.cr_penta2_na = cr_penta2_na;
         notifyPropertyChanged(BR.cr_penta2_na);
     }
@@ -1271,6 +1342,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_penta3_na(String cr_penta3_na) {
+        if (this.cr_penta3_na.equals(cr_penta3_na)) return; // for all checkboxes
         this.cr_penta3_na = cr_penta3_na;
         notifyPropertyChanged(BR.cr_penta3_na);
     }
@@ -1281,6 +1353,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_measles1_na(String cr_measles1_na) {
+        if (this.cr_measles1_na.equals(cr_measles1_na)) return; // for all checkboxes
         this.cr_measles1_na = cr_measles1_na;
         notifyPropertyChanged(BR.cr_measles1_na);
     }
@@ -1291,6 +1364,7 @@ public class FormCR extends BaseObservable {
     }
 
     public void setCr_measles2_na(String cr_measles2_na) {
+        if (this.cr_measles2_na.equals(cr_measles2_na)) return; // for all checkboxes
         this.cr_measles2_na = cr_measles2_na;
         notifyPropertyChanged(BR.cr_measles2_na);
     }
@@ -1502,9 +1576,7 @@ public class FormCR extends BaseObservable {
 
 
     public JSONObject toJSONObject() throws JSONException {
-
         JSONObject json = new JSONObject();
-
         json.put(FormCRTable.COLUMN_ID, this.id);
         json.put(FormCRTable.COLUMN_UID, this.uid);
         json.put(FormCRTable.COLUMN_USERNAME, this.userName);
@@ -1514,16 +1586,10 @@ public class FormCR extends BaseObservable {
         json.put(FormCRTable.COLUMN_ISTATUS, this.iStatus);
         json.put(FormCRTable.COLUMN_SYNCED, this.synced);
         json.put(FormCRTable.COLUMN_SYNCED_DATE, this.syncDate);
-        json.put(FormCRTable.COLUMN_CR, new JSONObject(cRtoString()));
         json.put(FormCRTable.COLUMN_END_TIME, this.endTime);
         json.put(FormCRTable.COLUMN_START_TIME, this.startTime);
 
-
-        if (this.cR != null && !this.cR.equals("")) {
-            json.put(FormCRTable.COLUMN_CR, new JSONObject(this.cR));
-        }
-
+        json.put(FormCRTable.COLUMN_CR, new JSONObject(cRtoString()));
         return json;
-
     }
 }
