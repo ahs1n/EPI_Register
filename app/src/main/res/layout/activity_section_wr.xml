@@ -5,9 +5,9 @@
 
         <import type="android.view.View" />
 
-        <!--        <variable
-                    name="form"
-                    type="edu.aku.hassannaqvi.epi_register.models.FormCR" />-->
+        <variable
+            name="form"
+            type="edu.aku.hassannaqvi.epi_register.models.FormWR" />
 
         <variable
             name="callback"
@@ -179,18 +179,21 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:text="@string/wr_page_number" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:text="@string/wr_rsno" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:text="@string/wr_card_number" />
 
                         </LinearLayout>
@@ -206,6 +209,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:hint="###"
                                 android:inputType="number"
                                 android:maxLength="3"
@@ -218,6 +222,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:hint="####"
                                 android:inputType="number"
                                 android:maxLength="4"
@@ -231,6 +236,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:hint="#####"
+                                android:gravity="center"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 app:maxValue="99999"
@@ -262,28 +268,16 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:text="@string/wr_women_name" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/wr_husband_name" />
                         </LinearLayout>
-
-                        <EditText
-                            android:id="@+id/wr_women_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
-                            android:hint="@string/wr_women_name" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-
-                <!-- wr_husband_name  Input   -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/fldGrpCVwr_husband_name"
-                    style="@style/cardView">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -291,22 +285,24 @@
                             android:background="@drawable/bottom"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <EditText
+                                android:id="@+id/wr_women_name"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:text="@string/wr_husband_name" />
-                        </LinearLayout>
+                                android:layout_weight="2"
+                                android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
+                                android:hint="@string/wr_women_name" />
 
-                        <EditText
-                            android:id="@+id/wr_husband_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
-                            android:hint="@string/wr_husband_name" />
+                            <EditText
+                                android:id="@+id/wr_husband_name"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
+                                android:hint="@string/wr_husband_name" />
+                        </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-
 
                 <!-- wr_age_years  Input-Numeric   -->
                 <androidx.cardview.widget.CardView
@@ -329,18 +325,20 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:text="@string/wr_age_years" />
-                        </LinearLayout>
 
-                        <com.edittextpicker.aliazaz.EditTextPicker
-                            android:id="@+id/wr_age_years"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/wr_age_years"
-                            android:inputType="number"
-                            android:maxLength="2"
-                            app:maxValue="49"
-                            app:minValue="14"
-                            app:type="range" />
+                            <com.edittextpicker.aliazaz.EditTextPicker
+                                android:id="@+id/wr_age_years"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:hint="##"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                app:maxValue="49"
+                                app:minValue="14"
+                                app:type="range" />
+                        </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -388,7 +386,7 @@
                             <CheckBox
                                 android:id="@+id/wr_address_previous"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_gravity="bottom"
                                 android:backgroundTint="@color/lightPink"
                                 android:tag="-1"
@@ -421,19 +419,12 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:text="@string/wr_phone" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bottom"
-                            android:orientation="horizontal">
 
                             <com.edittextpicker.aliazaz.EditTextPicker
                                 android:id="@+id/wr_phone"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
+                                android:layout_weight="2"
                                 android:hint="@string/wr_phone"
                                 android:inputType="number"
                                 android:maxLength="11"
@@ -444,11 +435,18 @@
                             <CheckBox
                                 android:id="@+id/wr_phone_na"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:backgroundTint="@color/lightPink"
                                 android:tag="-1"
                                 android:text="@string/nav"
                                 android:textColor="@color/redDark" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bottom"
+                            android:orientation="horizontal">
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
