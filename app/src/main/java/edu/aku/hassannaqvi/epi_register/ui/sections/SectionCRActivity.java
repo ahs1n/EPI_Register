@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +27,7 @@ import edu.aku.hassannaqvi.epi_register.contracts.TableContracts;
 import edu.aku.hassannaqvi.epi_register.core.MainApp;
 import edu.aku.hassannaqvi.epi_register.database.DatabaseHelper;
 import edu.aku.hassannaqvi.epi_register.databinding.ActivitySectionCrBinding;
+import edu.aku.hassannaqvi.epi_register.models.FormCR;
 
 public class SectionCRActivity extends AppCompatActivity {
     private static final String TAG = "SectionCRActivity";
@@ -40,13 +40,11 @@ public class SectionCRActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bi = DataBindingUtil.setContentView(this, R.layout.activity_section_cr);
-        bi.setCallback(this);
         st = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime());
         setupSkips();
 //        bi.setForm(cr);
         /*if (cr == null)
             cr = new FormCR();*/
-        bi.setForm(cr);
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
         String dmuReg = getIntent().getStringExtra("dmureg");
@@ -56,17 +54,18 @@ public class SectionCRActivity extends AppCompatActivity {
         cr.setCr_dmu_register(dmuReg);
         cr.setCr_reg_number(reg);
 
+        b = getIntent().getBooleanExtra("b", false);
+        if (b) cr = new FormCR();
+        bi.setForm(cr);
+
         if (MainApp.crAddress.trim().equals(""))
             bi.crAddressPrevious.setVisibility(View.GONE);
-        bi.crAddressPrevious.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    bi.crAddress.setText(MainApp.crAddress);
-                } else {
-                    bi.crAddress.setText("");
+        bi.crAddressPrevious.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                bi.crAddress.setText(MainApp.crAddress);
+            } else {
+                bi.crAddress.setText("");
 
-                }
             }
         });
 
@@ -207,7 +206,7 @@ public class SectionCRActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(this, SectionCRActivity.class)
                     .putExtra("dmureg", bi.crDmuRegister.getText().toString())
-                    .putExtra("reg", bi.crRegNumber.getText().toString()).putExtra("b", false));
+                    .putExtra("reg", bi.crRegNumber.getText().toString()).putExtra("b", true));
         } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
     }
 

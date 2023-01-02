@@ -9,11 +9,6 @@
             name="form"
             type="edu.aku.hassannaqvi.epi_register.models.FormCR" />
 
-        <variable
-            name="callback"
-            type="edu.aku.hassannaqvi.epi_register.ui.sections.SectionCRActivity" />
-
-
     </data>
 
     <LinearLayout
