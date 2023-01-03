@@ -97,6 +97,8 @@ public class MainApp extends Application {
     public static CountDownTimer timer;
     static ToneGenerator toneGen1;
 
+    public static String dmuRegNo;
+
 
     public static void hideSystemUI(View decorView) {
         // Enables regular immersive mode.

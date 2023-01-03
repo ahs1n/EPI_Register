@@ -9,6 +9,7 @@ import static edu.aku.hassannaqvi.epi_register.database.CreateTable.SQL_ALTER_US
 import static edu.aku.hassannaqvi.epi_register.database.CreateTable.SQL_ALTER_USERS_PWD_EXPIRY;
 import static edu.aku.hassannaqvi.epi_register.database.CreateTable.SQL_CREATE_ENTRYLOGS;
 import static edu.aku.hassannaqvi.epi_register.database.CreateTable.SQL_CREATE_FORMCR;
+import static edu.aku.hassannaqvi.epi_register.database.CreateTable.SQL_CREATE_FORMCRFollowUP;
 import static edu.aku.hassannaqvi.epi_register.database.CreateTable.SQL_CREATE_FORMWR;
 import static edu.aku.hassannaqvi.epi_register.database.CreateTable.SQL_CREATE_USERS;
 import static edu.aku.hassannaqvi.epi_register.database.CreateTable.SQL_CREATE_VERSIONAPP;
@@ -35,12 +36,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.EntryLogTable;
+import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.FormCRFollowUPTable;
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.FormCRTable;
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.FormWRTable;
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.UsersTable;
 import edu.aku.hassannaqvi.epi_register.core.MainApp;
 import edu.aku.hassannaqvi.epi_register.models.EntryLog;
 import edu.aku.hassannaqvi.epi_register.models.FormCR;
+import edu.aku.hassannaqvi.epi_register.models.FormCRFollowUP;
 import edu.aku.hassannaqvi.epi_register.models.FormWR;
 import edu.aku.hassannaqvi.epi_register.models.Users;
 
@@ -67,6 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_USERS);
         db.execSQL(SQL_CREATE_FORMCR);
+        db.execSQL(SQL_CREATE_FORMCRFollowUP);
         db.execSQL(SQL_CREATE_FORMWR);
         db.execSQL(SQL_CREATE_VERSIONAPP);
         db.execSQL(SQL_CREATE_ENTRYLOGS);
@@ -147,7 +151,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(EntryLogTable.COLUMN_PROJECT_NAME, entryLog.getProjectName());
         values.put(EntryLogTable.COLUMN_UUID, entryLog.getUuid());
-        values.put(EntryLogTable.COLUMN_PSU_CODE, entryLog.getPsuCode());
         values.put(EntryLogTable.COLUMN_USERNAME, entryLog.getUserName());
         values.put(EntryLogTable.COLUMN_SYSDATE, entryLog.getSysDate());
         values.put(EntryLogTable.COLUMN_ISTATUS, entryLog.getiStatus());
@@ -475,6 +478,110 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return insertCount;
     }
+
+    /*Sync FormCR*/
+    public int syncFormCR(JSONArray formCR) throws JSONException {
+        SQLiteDatabase db = this.getWritableDatabase(DATABASE_PASSWORD);
+        db.delete(FormCRFollowUPTable.TABLE_NAME, null, null);
+        int insertCount = 0;
+        for (int i = 0; i < formCR.length(); i++) {
+
+            JSONObject jsonObjectUser = formCR.getJSONObject(i);
+
+            FormCRFollowUP formCRFollowUP = new FormCRFollowUP();
+            formCRFollowUP.sync(jsonObjectUser);
+            ContentValues values = new ContentValues();
+
+            values.put(FormCRFollowUPTable.COLUMN_CR_DMU_REGISTER, formCRFollowUP.getCr_dmu_register());
+            values.put(FormCRFollowUPTable.COLUMN_CR_REG_NUMBER, formCRFollowUP.getCr_reg_number());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PAGE_NUMBER, formCRFollowUP.getCr_page_number());
+            values.put(FormCRFollowUPTable.COLUMN_CR_RSNO, formCRFollowUP.getCr_rsno());
+            values.put(FormCRFollowUPTable.COLUMN_CR_CARD_NUMBER, formCRFollowUP.getCr_card_number());
+            values.put(FormCRFollowUPTable.COLUMN_CR_CHILD_NAME, formCRFollowUP.getCr_child_name());
+            values.put(FormCRFollowUPTable.COLUMN_CR_FATHER_NAME, formCRFollowUP.getCr_father_name());
+            values.put(FormCRFollowUPTable.COLUMN_CR_AGE_MONTHS, formCRFollowUP.getCr_age_months());
+            values.put(FormCRFollowUPTable.COLUMN_CR_AGE_YEARS, formCRFollowUP.getCr_age_years());
+            values.put(FormCRFollowUPTable.COLUMN_CR_AGE_DAYS, formCRFollowUP.getCr_age_days());
+            values.put(FormCRFollowUPTable.COLUMN_CR_GENDER, formCRFollowUP.getCr_gender());
+            values.put(FormCRFollowUPTable.COLUMN_CR_ADDRESS, formCRFollowUP.getCr_address());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PHONE, formCRFollowUP.getCr_phone());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PHONE_NA, formCRFollowUP.getCr_phone_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_BCG, formCRFollowUP.getCr_bcg());
+            values.put(FormCRFollowUPTable.COLUMN_CR_BCG_D1, formCRFollowUP.getCr_bcg_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_BCG_D2, formCRFollowUP.getCr_bcg_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_BCG_NA, formCRFollowUP.getCr_bcg_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_HEP_B, formCRFollowUP.getCr_hep_b());
+            values.put(FormCRFollowUPTable.COLUMN_CR_HEP_B1, formCRFollowUP.getCr_hep_b1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_HEP_B2, formCRFollowUP.getCr_hep_b2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_HEP_BNA, formCRFollowUP.getCr_hep_bna());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV0, formCRFollowUP.getCr_opv0());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV0_D1, formCRFollowUP.getCr_opv0_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV0_D2, formCRFollowUP.getCr_opv0_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV0_NA, formCRFollowUP.getCr_opv0_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV1, formCRFollowUP.getCr_opv1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV1_D1, formCRFollowUP.getCr_opv1_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV1_D2, formCRFollowUP.getCr_opv1_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV1_NA, formCRFollowUP.getCr_opv1_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV2, formCRFollowUP.getCr_opv2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV2_D1, formCRFollowUP.getCr_opv2_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV2_D2, formCRFollowUP.getCr_opv2_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV2_NA, formCRFollowUP.getCr_opv2_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV3, formCRFollowUP.getCr_opv3());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV3_D1, formCRFollowUP.getCr_opv3_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV3_D2, formCRFollowUP.getCr_opv3_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_OPV3_NA, formCRFollowUP.getCr_opv3_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_ROTA1, formCRFollowUP.getCr_rota1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_ROTA1_D1, formCRFollowUP.getCr_rota1_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_ROTA1_D2, formCRFollowUP.getCr_rota1_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_ROTA1_NA, formCRFollowUP.getCr_rota1_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_ROTA2, formCRFollowUP.getCr_rota2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_ROTA2_D1, formCRFollowUP.getCr_rota2_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_ROTA2_D2, formCRFollowUP.getCr_rota2_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_ROTA2_NA, formCRFollowUP.getCr_rota2_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_IPV, formCRFollowUP.getCr_ipv());
+            values.put(FormCRFollowUPTable.COLUMN_CR_IPV_D1, formCRFollowUP.getCr_ipv_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_IPV_D2, formCRFollowUP.getCr_ipv_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_IPV_NA, formCRFollowUP.getCr_ipv_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV1, formCRFollowUP.getCr_pcv1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV1_D1, formCRFollowUP.getCr_pcv1_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV1_D2, formCRFollowUP.getCr_pcv1_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV1_NA, formCRFollowUP.getCr_pcv1_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV2, formCRFollowUP.getCr_pcv2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV2_D1, formCRFollowUP.getCr_pcv2_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV2_D2, formCRFollowUP.getCr_pcv2_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV2_NA, formCRFollowUP.getCr_pcv2_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV3, formCRFollowUP.getCr_pcv3());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV3_D1, formCRFollowUP.getCr_pcv3_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV3_D2, formCRFollowUP.getCr_pcv3_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PCV3_NA, formCRFollowUP.getCr_pcv3_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA1, formCRFollowUP.getCr_penta1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA1_D1, formCRFollowUP.getCr_penta1_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA1_D2, formCRFollowUP.getCr_penta1_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA1_NA, formCRFollowUP.getCr_penta1_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA2, formCRFollowUP.getCr_penta2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA2_D1, formCRFollowUP.getCr_penta2_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA2_D2, formCRFollowUP.getCr_penta2_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA2_NA, formCRFollowUP.getCr_penta2_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA3, formCRFollowUP.getCr_penta3());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA3_D1, formCRFollowUP.getCr_penta3_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA3_D2, formCRFollowUP.getCr_penta3_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_PENTA3_NA, formCRFollowUP.getCr_penta3_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_MEASLES1, formCRFollowUP.getCr_measles1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_MEASLES1_D1, formCRFollowUP.getCr_measles1_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_MEASLES1_D2, formCRFollowUP.getCr_measles1_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_MEASLES1_NA, formCRFollowUP.getCr_measles1_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_MEASLES2, formCRFollowUP.getCr_measles2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_MEASLES2_D1, formCRFollowUP.getCr_measles2_d1());
+            values.put(FormCRFollowUPTable.COLUMN_CR_MEASLES2_D2, formCRFollowUP.getCr_measles2_d2());
+            values.put(FormCRFollowUPTable.COLUMN_CR_MEASLES2_NA, formCRFollowUP.getCr_measles2_na());
+            values.put(FormCRFollowUPTable.COLUMN_CR_BIRTH_STATUS, formCRFollowUP.getCr_birth_status());
+            values.put(FormCRFollowUPTable.COLUMN_CR_COMMENTS, formCRFollowUP.getCr_comments());
+
+            long rowID = db.insert(FormCRFollowUPTable.TABLE_NAME, null, values);
+            if (rowID != -1) insertCount++;
+        }
+        return insertCount;
+    }
 /*
 
     public int syncClusters(JSONArray clusterList) {
@@ -690,6 +797,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 whereArgs);
     }
 
+    public void updateSyncedEntryLog(String id) {
+        SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
+
+        ContentValues values = new ContentValues();
+        values.put(EntryLogTable.COLUMN_SYNCED, true);
+        values.put(EntryLogTable.COLUMN_SYNC_DATE, new Date().toString());
+
+        String where = EntryLogTable.COLUMN_ID + " = ?";
+        String[] whereArgs = {id};
+
+        int count = db.update(
+                EntryLogTable.TABLE_NAME,
+                values,
+                where,
+                whereArgs);
+    }
+
 
 /*    public void updateSyncedSamp(String id) {
         SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD)
@@ -768,4 +892,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 selection,
                 selectionArgs);
     }
+
+
+    /*public FormCRFollowUP getFormCRByDMURegister(String dmuREG, String epiREG) {
+        SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
+        Cursor c = null;
+        String[] columns = null;
+
+        String whereClause = FormCRFollowUPTable.COLUMN_VILLAGE_CODE + " = ? AND " +
+                FormCRFollowUPTable.COLUMN_SR_NO + " = ?";
+
+        String[] whereArgs = {dmuREG, epiREG};
+        String groupBy = null;
+        String having = null;
+        String orderBy = FormCRFollowUPTable.COLUMN_SR_NO + " ASC";
+
+        FormCRFollowUP formCRFollowUP = new AdolList();
+        c = db.query(
+                FormCRFollowUPTable.TABLE_NAME,  // The table to query
+                columns,                   // The columns to return
+                whereClause,               // The columns for the WHERE clause
+                whereArgs,                 // The values for the WHERE clause
+                groupBy,                   // don't group the rows
+                having,                    // don't filter by row groups
+                orderBy                    // The sort order
+        );
+        while (c.moveToNext()) {
+            formCRFollowUP = new FormCRFollowUP().hydrate(c);
+        }
+        return formCRFollowUP;
+    }*/
+
+
+    /*public FormWRFollowUP getFormWRByDMURegister(String dmuREG, String epiREG) {
+        SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
+        Cursor c = null;
+        String[] columns = null;
+
+        String whereClause = FormWRFollowUPTable.COLUMN_VILLAGE_CODE + " = ? AND " +
+                FormWRFollowUPTable.COLUMN_SR_NO + " = ?";
+
+        String[] whereArgs = {dmuREG, epiREG};
+        String groupBy = null;
+        String having = null;
+        String orderBy = FormWRFollowUPTable.COLUMN_SR_NO + " ASC";
+
+        FormWRFollowUP formWRFollowUP = new AdolList();
+        c = db.query(
+                FormWRFollowUPTable.TABLE_NAME,  // The table to query
+                columns,                   // The columns to return
+                whereClause,               // The columns for the WHERE clause
+                whereArgs,                 // The values for the WHERE clause
+                groupBy,                   // don't group the rows
+                having,                    // don't filter by row groups
+                orderBy                    // The sort order
+        );
+        while (c.moveToNext()) {
+            formWRFollowUP = new FormWRFollowUP().hydrate(c);
+        }
+        return formWRFollowUP;
+    }*/
 }

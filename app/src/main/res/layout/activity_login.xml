@@ -180,6 +180,29 @@
                                     android:layout_gravity="center"
                                     android:visibility="gone" />
 
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        style="@style/sub_labels"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:text="DMU Reg No"
+                                        android:textSize="14dp" />
+
+                                    <EditText
+                                        android:id="@+id/dmuRegNo"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:inputType="number" />
+
+                                </LinearLayout>
+
                                 <androidx.appcompat.widget.AppCompatButton
                                     android:id="@+id/btnSignin"
                                     android:layout_width="150dp"

@@ -340,6 +340,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else if (MainApp.user.getEnabled().equals("1")) {
                         if (!MainApp.user.getNewUser().equals("1")) { // TODO: getEnabled().equals("1")
                             recordEntry("Successful Login");
+                            MainApp.dmuRegNo = bi.dmuRegNo.getText().toString();
                             iLogin = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(iLogin);
                         } else if (MainApp.user.getNewUser().equals("1")) {

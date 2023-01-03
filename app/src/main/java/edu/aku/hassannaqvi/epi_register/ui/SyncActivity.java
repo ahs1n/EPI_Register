@@ -50,6 +50,7 @@ import java.util.concurrent.TimeUnit;
 import edu.aku.hassannaqvi.epi_register.R;
 import edu.aku.hassannaqvi.epi_register.adapters.SyncListAdapter;
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.EntryLogTable;
+import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.FormCRFollowUPTable;
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.FormCRTable;
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.FormWRTable;
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.UsersTable;
@@ -186,8 +187,21 @@ public class SyncActivity extends AppCompatActivity {
                 downloadTables.clear();
                 boolean sync_flag = getIntent().getBooleanExtra("login", false);
 
-                downloadTables.add(new SyncModel(UsersTable.TABLE_NAME));
-                downloadTables.add(new SyncModel(VersionTable.TABLE_NAME));
+                // set select and filter to default, set again with the table in case of special requirements
+                String select = " * ";
+                String filter = " colflag is null ";
+
+                if (sync_flag) {
+                    select = " * ";
+                    filter = " enabled = '1' ";
+
+                    downloadTables.add(new SyncModel(UsersTable.TABLE_NAME));
+                    downloadTables.add(new SyncModel(VersionTable.TABLE_NAME));
+                } else {
+                    select = " * ";
+                    filter = "cr_dmu_register = " + MainApp.dmuRegNo;
+                    downloadTables.add(new SyncModel(FormCRFollowUPTable.TABLE_NAME_API, select, filter));
+                }
 
                 MainApp.downloadData = new String[downloadTables.size()];
                 setAdapter(downloadTables);
