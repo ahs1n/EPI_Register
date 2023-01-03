@@ -47,16 +47,17 @@ public class SectionCRActivity extends AppCompatActivity {
             cr = new FormCR();*/
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
+
+        b = getIntent().getBooleanExtra("b", false);
+        if (b) cr = new FormCR();
+        bi.setForm(cr);
+
         String dmuReg = getIntent().getStringExtra("dmureg");
         String reg = getIntent().getStringExtra("reg");
         bi.crDmuRegister.setText(dmuReg);
         bi.crRegNumber.setText(reg);
         cr.setCr_dmu_register(dmuReg);
         cr.setCr_reg_number(reg);
-
-        b = getIntent().getBooleanExtra("b", false);
-        if (b) cr = new FormCR();
-        bi.setForm(cr);
 
         if (MainApp.crAddress.trim().equals(""))
             bi.crAddressPrevious.setVisibility(View.GONE);
@@ -178,9 +179,7 @@ public class SectionCRActivity extends AppCompatActivity {
 
     private boolean updateDB() {
         if (MainApp.superuser) return true;
-
         db = MainApp.appInfo.getDbHelper();
-//        cr.setStartTime(st);
         long updcount = 0;
         try {
             updcount = db.updateCrColumn(TableContracts.FormCRTable.COLUMN_CR, cr.cRtoString());

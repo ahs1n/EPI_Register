@@ -5,6 +5,7 @@ import static edu.aku.hassannaqvi.epi_register.core.MainApp.wr;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ public class SectionWRActivity extends AppCompatActivity {
     ActivitySectionWrBinding bi;
     String st = "";
     private DatabaseHelper db;
+    boolean b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +50,17 @@ public class SectionWRActivity extends AppCompatActivity {
 //        bi.setForm(form);
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
+
+        b = getIntent().getBooleanExtra("b", false);
+        if (b) wr = new FormWR();
+        bi.setForm(wr);
+
         String dmuReg = getIntent().getStringExtra("dmureg");
         String reg = getIntent().getStringExtra("reg");
         bi.wrDmuRegister.setText(dmuReg);
         bi.wrRegNumber.setText(reg);
+        wr.setWr_dmu_register(dmuReg);
+        wr.setWr_reg_number(reg);
 
         if (MainApp.wrAddress.trim().equals(""))
             bi.wrAddressPrevious.setVisibility(View.GONE);
@@ -101,138 +110,63 @@ public class SectionWRActivity extends AppCompatActivity {
     }
 
 
-    private boolean insertRecord() {
-        DatabaseHelper db = MainApp.appInfo.getDbHelper();
+    private boolean insertNewRecord() {
+        if (!wr.getUid().equals("") || MainApp.superuser) return true;
+        MainApp.wr.populateMeta();
         long rowId = 0;
-
         try {
             rowId = db.addWR(wr);
-
-            if (rowId > 0) {
-                long updCount = 0;
-
-                wr.setId(String.valueOf(rowId));
-                wr.setUid(wr.getDeviceId() + wr.getId());
-
-                updCount = db.updateWrColumn(TableContracts.FormWRTable.COLUMN_UID, wr.getUid());
-
-                if (updCount > 0) {
-                    return true;
-                }
-
-            } else {
-                Toast.makeText(this, "Updating Database… ERROR!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this, "JSONException(WR):" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.db_excp_error, Toast.LENGTH_SHORT).show();
+            return false;
         }
+        MainApp.wr.setId(String.valueOf(rowId));
+        if (rowId > 0) {
+            MainApp.wr.setUid(MainApp.wr.getDeviceId() + MainApp.wr.getId());
+            db.updateWrColumn(TableContracts.FormWRTable.COLUMN_UID, MainApp.wr.getUid());
+            return true;
+        } else {
+            Toast.makeText(this, R.string.upd_db_error, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
 
-        return false;
+
+    private boolean updateDB() {
+        if (MainApp.superuser) return true;
+
+        db = MainApp.appInfo.getDbHelper();
+        long updcount = 0;
+        try {
+            updcount = db.updateWrColumn(TableContracts.FormWRTable.COLUMN_WR, wr.wRtoString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d(TAG, R.string.upd_db + e.getMessage());
+            Toast.makeText(this, R.string.upd_db + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        if (updcount > 0) return true;
+        else {
+            Toast.makeText(this, R.string.upd_db_error, Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
 
     public void btnContinue(View view) {
         if (!formValidation()) return;
-        try {
-            saveDraft();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (insertRecord()) {
+        MainApp.wrAddress = bi.wrAddress.getText().toString();
+        wr.setStartTime(st);
+        if (!insertNewRecord()) return;
+        if (updateDB()) {
             finish();
             startActivity(new Intent(this, SectionWRActivity.class)
                     .putExtra("dmureg", bi.wrDmuRegister.getText().toString())
-                    .putExtra("reg", bi.wrRegNumber.getText().toString()));
+                    .putExtra("reg", bi.wrRegNumber.getText().toString()).putExtra("b", true));
         } else {
             Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-    private void saveDraft() throws JSONException {
-
-        wr = new FormWR();
-        wr.setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-        wr.setUserName(MainApp.user.getUserName());
-        wr.setDeviceId(MainApp.appInfo.getDeviceID());
-        wr.setDeviceTag(MainApp.appInfo.getTagName());
-        wr.setAppver(MainApp.appInfo.getAppVersion());
-
-        wr.setStartTime(st);
-        wr.setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
-
-        wr.setWr_dmu_register(bi.wrDmuRegister.getText().toString());
-
-        wr.setWr_reg_number(bi.wrRegNumber.getText().toString());
-
-        wr.setWr_page_number(bi.wrPageNumber.getText().toString());
-
-        wr.setWr_rsno(bi.wrRsno.getText().toString());
-
-        wr.setWr_card_number(bi.wrCardNumber.getText().toString());
-
-        wr.setWr_women_name(bi.wrWomenName.getText().toString());
-
-        wr.setWr_husband_name(bi.wrHusbandName.getText().toString());
-
-        wr.setWr_age_years(bi.wrAgeYears.getText().toString());
-
-        wr.setWr_address(bi.wrAddress.getText().toString());
-        MainApp.wrAddress = bi.wrAddress.getText().toString();
-
-        //wr.setWr_address_previous(bi.wrAddressPrevious.isChecked() ? "1" : "-1");
-
-        wr.setWr_phone(bi.wrPhone.getText().toString());
-
-        wr.setWr_phone_na(bi.wrPhoneNa.isChecked() ? "1" : "-1");
-
-        wr.setWr_ttd1(bi.wrTtd1.getText().toString());
-
-        wr.setWr_ttd1ds1(bi.wrTtd1ds1.isChecked() ? "1" : "-1");
-
-        wr.setWr_ttd1ds2(bi.wrTtd1ds2.isChecked() ? "2" : "-1");
-
-        wr.setWr_ttd1na(bi.wrTtd1na.isChecked() ? "97" : "-1");
-
-        wr.setWr_ttd2(bi.wrTtd2.getText().toString());
-
-        wr.setWr_ttd2ds1(bi.wrTtd2ds1.isChecked() ? "1" : "-1");
-
-        wr.setWr_ttd2ds2(bi.wrTtd2ds2.isChecked() ? "2" : "-1");
-
-        wr.setWr_ttd2na(bi.wrTtd2na.isChecked() ? "97" : "-1");
-
-        wr.setWr_ttd3(bi.wrTtd3.getText().toString());
-
-        wr.setWr_ttd3ds1(bi.wrTtd3ds1.isChecked() ? "1" : "-1");
-
-        wr.setWr_ttd3ds2(bi.wrTtd3ds2.isChecked() ? "2" : "-1");
-
-        wr.setWr_ttd3na(bi.wrTtd3na.isChecked() ? "97" : "-1");
-
-        wr.setWr_ttd4(bi.wrTtd4.getText().toString());
-
-        wr.setWr_ttd4ds1(bi.wrTtd4ds1.isChecked() ? "1" : "-1");
-
-        wr.setWr_ttd4ds2(bi.wrTtd4ds2.isChecked() ? "2" : "-1");
-
-        wr.setWr_ttd4na(bi.wrTtd4na.isChecked() ? "97" : "-1");
-
-        wr.setWr_ttd5(bi.wrTtd5.getText().toString());
-
-        wr.setWr_ttd5ds1(bi.wrTtd5ds1.isChecked() ? "1" : "-1");
-
-        wr.setWr_ttd5ds2(bi.wrTtd5ds2.isChecked() ? "2" : "-1");
-
-        wr.setWr_ttd5na(bi.wrTtd5na.isChecked() ? "97" : "-1");
-
-        wr.setWr_comments(bi.wrComments.getText().toString());
-
-        wr.setwR(wr.wRtoString());
-    }
-
 
     public void btnEnd(View view) {
         finish();

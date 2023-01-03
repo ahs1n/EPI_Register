@@ -91,7 +91,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-
                                 android:text="@string/wr_dmu_register"
                                 android:textSize="22dp" />
 
@@ -213,6 +212,7 @@
                                 android:hint="###"
                                 android:inputType="number"
                                 android:maxLength="3"
+                                android:text="@={form.wr_page_number}"
                                 app:maxValue="500"
                                 app:minValue="1"
                                 app:type="range" />
@@ -226,6 +226,7 @@
                                 android:hint="####"
                                 android:inputType="number"
                                 android:maxLength="4"
+                                android:text="@={form.wr_rsno}"
                                 app:maxValue="9999"
                                 app:minValue="1"
                                 app:type="range" />
@@ -235,10 +236,11 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:hint="#####"
                                 android:gravity="center"
+                                android:hint="#####"
                                 android:inputType="number"
                                 android:maxLength="5"
+                                android:text="@={form.wr_card_number}"
                                 app:maxValue="99999"
                                 app:minValue="1"
                                 app:type="range" />
@@ -291,7 +293,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="2"
                                 android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
-                                android:hint="@string/wr_women_name" />
+                                android:hint="@string/wr_women_name"
+                                android:text="@={form.wr_women_name}" />
 
                             <EditText
                                 android:id="@+id/wr_husband_name"
@@ -299,7 +302,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="2"
                                 android:digits="AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz "
-                                android:hint="@string/wr_husband_name" />
+                                android:hint="@string/wr_husband_name"
+                                android:text="@={form.wr_husband_name}" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -335,6 +339,7 @@
                                 android:hint="##"
                                 android:inputType="number"
                                 android:maxLength="2"
+                                android:text="@={form.wr_age_years}"
                                 app:maxValue="49"
                                 app:minValue="14"
                                 app:type="range" />
@@ -381,7 +386,8 @@
                                 android:gravity="top"
                                 android:hint="@string/wr_address"
                                 android:lines="5"
-                                android:minLines="5" />
+                                android:minLines="5"
+                                android:text="@={form.wr_address}" />
 
                             <CheckBox
                                 android:id="@+id/wr_address_previous"
@@ -389,6 +395,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="bottom"
                                 android:backgroundTint="@color/lightPink"
+                                android:checked="@{form.wr_address_previous.equals(`1`)}"
+                                android:onClick="@{()->form.setWr_address_previous(form.wr_address_previous.equals(`1`)?``:`1`)}"
                                 android:tag="-1"
                                 android:text="@string/wr_address_previous"
                                 android:textColor="@color/redDark" />
@@ -428,6 +436,7 @@
                                 android:hint="@string/wr_phone"
                                 android:inputType="number"
                                 android:maxLength="11"
+                                android:text="@={form.wr_phone}"
                                 app:maxValue="99999999999"
                                 app:minValue="1"
                                 app:type="range" />
@@ -437,6 +446,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:backgroundTint="@color/lightPink"
+                                android:checked="@{form.wr_phone_na.equals(`1`)}"
+                                android:onClick="@{()->form.setWr_phone_na(form.wr_phone_na.equals(`1`)?``:`1`)}"
                                 android:tag="-1"
                                 android:text="@string/nav"
                                 android:textColor="@color/redDark" />
@@ -446,8 +457,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bottom"
-                            android:orientation="horizontal">
-                        </LinearLayout>
+                            android:orientation="horizontal"></LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -489,6 +499,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.wr_ttd1}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -506,18 +517,24 @@
                                 android:id="@+id/wr_ttd1ds1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd1ds1.equals(`1`)}"
+                                android:onClick="@{()->form.setWr_ttd1ds1(form.wr_ttd1ds1.equals(`1`)?``:`1`)}"
                                 android:text="@string/wr_ttd1ds1" />
 
                             <CheckBox
                                 android:id="@+id/wr_ttd1ds2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd1ds2.equals(`2`)}"
+                                android:onClick="@{()->form.setWr_ttd1ds2(form.wr_ttd1ds2.equals(`2`)?``:`2`)}"
                                 android:text="@string/wr_ttd1ds2" />
 
                             <CheckBox
                                 android:id="@+id/wr_ttd1na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd1na.equals(`97`)}"
+                                android:onClick="@{()->form.setWr_ttd1na(form.wr_ttd1na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
 
@@ -547,6 +564,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.wr_ttd2}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -564,18 +582,24 @@
                                 android:id="@+id/wr_ttd2ds1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd2ds1.equals(`1`)}"
+                                android:onClick="@{()->form.setWr_ttd2ds1(form.wr_ttd2ds1.equals(`1`)?``:`1`)}"
                                 android:text="@string/wr_ttd2ds1" />
 
                             <CheckBox
                                 android:id="@+id/wr_ttd2ds2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd2ds2.equals(`2`)}"
+                                android:onClick="@{()->form.setWr_ttd2ds2(form.wr_ttd2ds2.equals(`2`)?``:`2`)}"
                                 android:text="@string/wr_ttd2ds2" />
 
                             <CheckBox
                                 android:id="@+id/wr_ttd2na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd2na.equals(`97`)}"
+                                android:onClick="@{()->form.setWr_ttd2na(form.wr_ttd2na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
 
@@ -606,6 +630,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.wr_ttd3}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -623,18 +648,24 @@
                                 android:id="@+id/wr_ttd3ds1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd3ds1.equals(`1`)}"
+                                android:onClick="@{()->form.setWr_ttd3ds1(form.wr_ttd3ds1.equals(`1`)?``:`1`)}"
                                 android:text="@string/wr_ttd3ds1" />
 
                             <CheckBox
                                 android:id="@+id/wr_ttd3ds2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd3ds2.equals(`2`)}"
+                                android:onClick="@{()->form.setWr_ttd3ds2(form.wr_ttd3ds2.equals(`2`)?``:`2`)}"
                                 android:text="@string/wr_ttd3ds2" />
 
                             <CheckBox
                                 android:id="@+id/wr_ttd3na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd3na.equals(`97`)}"
+                                android:onClick="@{()->form.setWr_ttd3na(form.wr_ttd3na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
 
@@ -666,6 +697,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.wr_ttd4}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -683,18 +715,24 @@
                                 android:id="@+id/wr_ttd4ds1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd4ds1.equals(`1`)}"
+                                android:onClick="@{()->form.setWr_ttd4ds1(form.wr_ttd4ds1.equals(`1`)?``:`1`)}"
                                 android:text="@string/wr_ttd4ds1" />
 
                             <CheckBox
                                 android:id="@+id/wr_ttd4ds2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd4ds2.equals(`2`)}"
+                                android:onClick="@{()->form.setWr_ttd4ds2(form.wr_ttd4ds2.equals(`2`)?``:`2`)}"
                                 android:text="@string/wr_ttd4ds2" />
 
                             <CheckBox
                                 android:id="@+id/wr_ttd4na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd4na.equals(`97`)}"
+                                android:onClick="@{()->form.setWr_ttd4na(form.wr_ttd4na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
 
@@ -724,6 +762,7 @@
                                 android:gravity="center"
                                 android:hint="DD/MM/YYYY"
                                 android:inputType="number"
+                                android:text="@={form.wr_ttd5}"
                                 app:mask="##/##/####"
                                 app:pattern="^(\\d{2,2}\\/\\d{2,2}\\/\\d{4,4})$" />
                         </LinearLayout>
@@ -741,18 +780,24 @@
                                 android:id="@+id/wr_ttd5ds1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd5ds1.equals(`1`)}"
+                                android:onClick="@{()->form.setWr_ttd5ds1(form.wr_ttd5ds1.equals(`1`)?``:`1`)}"
                                 android:text="@string/wr_ttd5ds1" />
 
                             <CheckBox
                                 android:id="@+id/wr_ttd5ds2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd5ds2.equals(`2`)}"
+                                android:onClick="@{()->form.setWr_ttd5ds2(form.wr_ttd5ds2.equals(`2`)?``:`2`)}"
                                 android:text="@string/wr_ttd5ds2" />
 
                             <CheckBox
                                 android:id="@+id/wr_ttd5na"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{form.wr_ttd5na.equals(`97`)}"
+                                android:onClick="@{()->form.setWr_ttd5na(form.wr_ttd5na.equals(`97`)?``:`97`)}"
                                 android:text="@string/nap" />
                         </LinearLayout>
 
@@ -792,7 +837,8 @@
                             android:hint="@string/wr_comments"
                             android:lines="5"
                             android:minLines="5"
-                            android:tag="-1" />
+                            android:tag="-1"
+                            android:text="@={form.wr_comments}" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

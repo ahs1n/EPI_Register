@@ -1,5 +1,6 @@
 package edu.aku.hassannaqvi.epi_register.models;
 
+import static edu.aku.hassannaqvi.epi_register.core.MainApp.PROJECT_NAME;
 import static edu.aku.hassannaqvi.epi_register.core.MainApp._EMPTY_;
 
 import android.database.Cursor;
@@ -12,6 +13,10 @@ import androidx.databinding.PropertyChangeRegistry;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import edu.aku.hassannaqvi.epi_register.BR;
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.FormWRTable;
 import edu.aku.hassannaqvi.epi_register.core.MainApp;
@@ -21,7 +26,7 @@ public class FormWR extends BaseObservable {
     private final String TAG = "FormWR";
     private final transient PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
     // APP VARIABLES
-    private String projectName = MainApp.PROJECT_NAME;
+    private String projectName = PROJECT_NAME;
     // APP VARIABLES
     private String id = _EMPTY_;
     private String uid = _EMPTY_;
@@ -78,6 +83,17 @@ public class FormWR extends BaseObservable {
     private String wr_ttd5na = _EMPTY_;
     private String wr_comments = _EMPTY_;
     private String wR = _EMPTY_;
+
+
+    public void populateMeta() {
+        setSysDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+        setUserName(MainApp.user.getUserName());
+        setDeviceId(MainApp.deviceid);
+        setDeviceTag(MainApp.appInfo.getTagName());
+        setAppver(MainApp.appInfo.getAppVersion());
+        setProjectName(PROJECT_NAME);
+        setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
+    }
 
 
     public String getProjectName() {
@@ -318,6 +334,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_phone_na(String wr_phone_na) {
+        if (this.wr_phone_na.equals(wr_phone_na)) return; // for all checkboxes
         this.wr_phone_na = wr_phone_na;
         notifyPropertyChanged(BR.wr_phone_na);
     }
@@ -348,6 +365,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd1ds1(String wr_ttd1ds1) {
+        if (this.wr_ttd1ds1.equals(wr_ttd1ds1)) return; // for all checkboxes
         this.wr_ttd1ds1 = wr_ttd1ds1;
         notifyPropertyChanged(BR.wr_ttd1ds1);
     }
@@ -358,6 +376,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd1ds2(String wr_ttd1ds2) {
+        if (this.wr_ttd1ds2.equals(wr_ttd1ds2)) return; // for all checkboxes
         this.wr_ttd1ds2 = wr_ttd1ds2;
         notifyPropertyChanged(BR.wr_ttd1ds2);
     }
@@ -388,6 +407,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd2ds1(String wr_ttd2ds1) {
+        if (this.wr_ttd2ds1.equals(wr_ttd2ds1)) return; // for all checkboxes
         this.wr_ttd2ds1 = wr_ttd2ds1;
         notifyPropertyChanged(BR.wr_ttd2ds1);
     }
@@ -398,6 +418,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd2ds2(String wr_ttd2ds2) {
+        if (this.wr_ttd2ds2.equals(wr_ttd2ds2)) return; // for all checkboxes
         this.wr_ttd2ds2 = wr_ttd2ds2;
         notifyPropertyChanged(BR.wr_ttd2ds2);
     }
@@ -428,6 +449,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd3ds1(String wr_ttd3ds1) {
+        if (this.wr_ttd3ds1.equals(wr_ttd3ds1)) return; // for all checkboxes
         this.wr_ttd3ds1 = wr_ttd3ds1;
         notifyPropertyChanged(BR.wr_ttd3ds1);
     }
@@ -438,6 +460,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd3ds2(String wr_ttd3ds2) {
+        if (this.wr_ttd3ds2.equals(wr_ttd3ds2)) return; // for all checkboxes
         this.wr_ttd3ds2 = wr_ttd3ds2;
         notifyPropertyChanged(BR.wr_ttd3ds2);
     }
@@ -468,6 +491,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd4ds1(String wr_ttd4ds1) {
+        if (this.wr_ttd4ds1.equals(wr_ttd4ds1)) return; // for all checkboxes
         this.wr_ttd4ds1 = wr_ttd4ds1;
         notifyPropertyChanged(BR.wr_ttd4ds1);
     }
@@ -478,6 +502,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd4ds2(String wr_ttd4ds2) {
+        if (this.wr_ttd4ds2.equals(wr_ttd4ds2)) return; // for all checkboxes
         this.wr_ttd4ds2 = wr_ttd4ds2;
         notifyPropertyChanged(BR.wr_ttd4ds2);
     }
@@ -508,6 +533,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd5ds1(String wr_ttd5ds1) {
+        if (this.wr_ttd5ds1.equals(wr_ttd5ds1)) return; // for all checkboxes
         this.wr_ttd5ds1 = wr_ttd5ds1;
         notifyPropertyChanged(BR.wr_ttd5ds1);
     }
@@ -518,6 +544,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd5ds2(String wr_ttd5ds2) {
+        if (this.wr_ttd5ds2.equals(wr_ttd5ds2)) return; // for all checkboxes
         this.wr_ttd5ds2 = wr_ttd5ds2;
         notifyPropertyChanged(BR.wr_ttd5ds2);
     }
@@ -538,6 +565,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd1na(String wr_ttd1na) {
+        if (this.wr_ttd1na.equals(wr_ttd1na)) return; // for all checkboxes
         this.wr_ttd1na = wr_ttd1na;
         notifyPropertyChanged(BR.wr_ttd1na);
     }
@@ -548,6 +576,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd2na(String wr_ttd2na) {
+        if (this.wr_ttd2na.equals(wr_ttd2na)) return; // for all checkboxes
         this.wr_ttd2na = wr_ttd2na;
         notifyPropertyChanged(BR.wr_ttd2na);
     }
@@ -558,6 +587,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd3na(String wr_ttd3na) {
+        if (this.wr_ttd3na.equals(wr_ttd3na)) return; // for all checkboxes
         this.wr_ttd3na = wr_ttd3na;
         notifyPropertyChanged(BR.wr_ttd3na);
     }
@@ -568,6 +598,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd4na(String wr_ttd4na) {
+        if (this.wr_ttd4na.equals(wr_ttd4na)) return; // for all checkboxes
         this.wr_ttd4na = wr_ttd4na;
         notifyPropertyChanged(BR.wr_ttd4na);
     }
@@ -578,6 +609,7 @@ public class FormWR extends BaseObservable {
     }
 
     public void setWr_ttd5na(String wr_ttd5na) {
+        if (this.wr_ttd5na.equals(wr_ttd5na)) return; // for all checkboxes
         this.wr_ttd5na = wr_ttd5na;
         notifyPropertyChanged(BR.wr_ttd5na);
     }
@@ -699,11 +731,6 @@ public class FormWR extends BaseObservable {
         json.put(FormWRTable.COLUMN_START_TIME, this.startTime);
         json.put(FormWRTable.COLUMN_END_TIME, this.endTime);
         json.put(FormWRTable.COLUMN_WR, new JSONObject(wRtoString()));
-
-
-        if (this.wR != null && !this.wR.equals("")) {
-            json.put(FormWRTable.COLUMN_WR, new JSONObject(this.wR));
-        }
 
         return json;
 

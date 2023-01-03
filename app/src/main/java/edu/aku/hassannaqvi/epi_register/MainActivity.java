@@ -16,6 +16,7 @@ import edu.aku.hassannaqvi.epi_register.core.MainApp;
 import edu.aku.hassannaqvi.epi_register.database.AndroidManager;
 import edu.aku.hassannaqvi.epi_register.databinding.ActivityMainBinding;
 import edu.aku.hassannaqvi.epi_register.models.FormCR;
+import edu.aku.hassannaqvi.epi_register.models.FormWR;
 import edu.aku.hassannaqvi.epi_register.ui.ChangePasswordActivity;
 import edu.aku.hassannaqvi.epi_register.ui.SyncActivity;
 import edu.aku.hassannaqvi.epi_register.ui.sections.SectionCRActivity;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                         .putExtra("reg", bi.reg.getText().toString()));
                 break;
             case R.id.openWomenForm:
-                //MainApp.wr = new FormWR();
+                MainApp.wr = new FormWR();
                 finish();
                 startActivity(new Intent(this, SectionWRActivity.class)
                         .putExtra("dmureg", bi.dmureg.getText().toString())
