@@ -72,7 +72,7 @@ public class RegisteredChildListActivity extends AppCompatActivity {
             try {
                 MainApp.crFollowUP = db.getSelectedMembers(member.getCr_card_number(), member.getCr_dmu_register(), member.getCr_page_number());
                 Toast.makeText(RegisteredChildListActivity.this,
-                        "Selected Member\n Line No: "
+                        "Selected Member\n Card No: "
                                 + member.getCr_card_number() + "\nName: "
                                 + member.getCr_child_name(),
                         Toast.LENGTH_LONG).show();
@@ -135,7 +135,7 @@ public class RegisteredChildListActivity extends AppCompatActivity {
                 try {
                     crFollowUP = db.getSelectedMembers(member.getCr_card_number(), member.getCr_dmu_register(), member.getCr_page_number());
                     Toast.makeText(RegisteredChildListActivity.this,
-                            "Selected Member\n Line No: "
+                            "Selected Member\n Card No: "
                                     + member.getCr_card_number() + "\nName: "
                                     + member.getCr_child_name(),
                             Toast.LENGTH_LONG).show();
@@ -155,7 +155,7 @@ public class RegisteredChildListActivity extends AppCompatActivity {
                 try {
                     crFollowUP = db.getSelectedMembers(member.getCr_card_number(), member.getCr_dmu_register(), member.getCr_page_number());
                     Toast.makeText(RegisteredChildListActivity.this,
-                            "Selected Member\n Line No: "
+                            "Selected Member\n Card No: "
                                     + member.getCr_card_number() + "\nName: "
                                     + member.getCr_child_name(),
                             Toast.LENGTH_LONG).show();

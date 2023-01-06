@@ -583,70 +583,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return insertCount;
     }
-/*
-
-    public int syncClusters(JSONArray clusterList) {
-        SQLiteDatabase db = this.getWritableDatabase(DATABASE_PASSWORD);
-        db.delete(ClustersTable.TABLE_NAME, null, null);
-        int insertCount = 0;
-        try {
-            for (int i = 0; i < clusterList.length(); i++) {
-
-                JSONObject json = clusterList.getJSONObject(i);
-
-                Clusters cluster = new Clusters();
-                cluster.sync(json);
-                ContentValues values = new ContentValues();
-
-                values.put(ClustersTable.COLUMN_DISTRICT_NAME, cluster.getDistrictName());
-                values.put(ClustersTable.COLUMN_DISTRICT_CODE, cluster.getDistrictCode());
-                values.put(ClustersTable.COLUMN_CITY_NAME, cluster.getCityName());
-                values.put(ClustersTable.COLUMN_CITY_CODE, cluster.getCityCode());
-                values.put(ClustersTable.COLUMN_CLUSTER_NO, cluster.getClusterNo());
-                long rowID = db.insert(ClustersTable.TABLE_NAME, null, values);
-                if (rowID != -1) insertCount++;
-            }
-
-        } catch (Exception e) {
-            Log.d(TAG, "syncClusters(e): " + e);
-            db.close();
-        } finally {
-            db.close();
-        }
-        return insertCount;
-    }
-
-    public int syncRandom(JSONArray list) {
-        SQLiteDatabase db = this.getWritableDatabase(DATABASE_PASSWORD);
-        db.delete(RandomTable.TABLE_NAME, null, null);
-        int insertCount = 0;
-        try {
-            for (int i = 0; i < list.length(); i++) {
-
-                JSONObject json = list.getJSONObject(i);
-
-                RandomHH ran = new RandomHH();
-                ran.sync(json);
-                ContentValues values = new ContentValues();
-                values.put(RandomTable.COLUMN_ID, ran.getID());
-                values.put(RandomTable.COLUMN_SNO, ran.getSno());
-                values.put(RandomTable.COLUMN_CLUSTER_NO, ran.getClusterNo());
-                values.put(RandomTable.COLUMN_HH_NO, ran.getHhno());
-                values.put(RandomTable.COLUMN_HEAD_HH, ran.getHeadhh());
-                long rowID = db.insert(RandomTable.TABLE_NAME, null, values);
-                if (rowID != -1) insertCount++;
-            }
-
-        } catch (Exception e) {
-            Log.d(TAG, "syncRandom(e): " + e);
-            db.close();
-        } finally {
-            db.close();
-        }
-        return insertCount;
-    }
-
-*/
 
 
     //get UnSyncedTables
@@ -760,7 +696,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //update SyncedTables
-    public void updateSyncedFormCR(String id) {
+    public void updateSyncedFormCRV2(String id) {
         SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
 
 // New value for one column
