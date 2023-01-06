@@ -2,7 +2,10 @@ package edu.aku.hassannaqvi.epi_register.ui.sections;
 
 import static edu.aku.hassannaqvi.epi_register.core.MainApp.cbCheck;
 import static edu.aku.hassannaqvi.epi_register.core.MainApp.cr;
+import static edu.aku.hassannaqvi.epi_register.core.MainApp.crFollowUP;
+import static edu.aku.hassannaqvi.epi_register.core.MainApp.formCRList;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +21,9 @@ import com.validatorcrawler.aliazaz.Validator;
 import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import edu.aku.hassannaqvi.epi_register.MainActivity;
@@ -28,6 +33,7 @@ import edu.aku.hassannaqvi.epi_register.core.MainApp;
 import edu.aku.hassannaqvi.epi_register.database.DatabaseHelper;
 import edu.aku.hassannaqvi.epi_register.databinding.ActivitySectionCrBinding;
 import edu.aku.hassannaqvi.epi_register.models.FormCR;
+import edu.aku.hassannaqvi.epi_register.ui.lists.RegisteredChildListActivity;
 
 public class SectionCRActivity extends AppCompatActivity {
     private static final String TAG = "SectionCRActivity";
@@ -35,6 +41,9 @@ public class SectionCRActivity extends AppCompatActivity {
     String st = "";
     private DatabaseHelper db;
     boolean b;
+
+    List<FormCR> formCrList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +57,41 @@ public class SectionCRActivity extends AppCompatActivity {
         setSupportActionBar(bi.toolbar);
         db = MainApp.appInfo.dbHelper;
 
+        formCRList = new ArrayList<>();
+
+        Log.d(TAG, "onCreate(registeredMemberList): " + formCrList.size());
+
+        String dmuReg = getIntent().getStringExtra("dmureg");
+        String reg = getIntent().getStringExtra("reg");
+        boolean isNew = getIntent().getBooleanExtra("new", false);
+
+        try {
+            formCRList.clear();
+//            formCRList = db.getRegisteredMembers(crFollowUP.getCr_card_number(), crFollowUP.getCr_dmu_register(), crFollowUP.getCr_page_number());
+            if (!isNew) {
+                cr = db.getRegisteredMembersFormCR(crFollowUP.getUID());
+                if (cr == null) {
+                    cr = db.getRegisteredMembers(crFollowUP.getCr_card_number(), crFollowUP.getCr_dmu_register(), crFollowUP.getCr_page_number()).get(0);
+                    cr.setUuid(cr.getUid());
+                    cr.setUid("");
+                }
+            } else {
+                cr.setCr_dmu_register(dmuReg);
+                cr.setCr_reg_number(reg);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         b = getIntent().getBooleanExtra("b", false);
         if (b) cr = new FormCR();
         bi.setForm(cr);
 
-        String dmuReg = getIntent().getStringExtra("dmureg");
-        String reg = getIntent().getStringExtra("reg");
         bi.crDmuRegister.setText(dmuReg);
         bi.crRegNumber.setText(reg);
-        cr.setCr_dmu_register(dmuReg);
-        cr.setCr_reg_number(reg);
+//        cr.setCr_dmu_register(dmuReg);
+//        cr.setCr_reg_number(reg);
 
         if (MainApp.crAddress.trim().equals(""))
             bi.crAddressPrevious.setVisibility(View.GONE);
@@ -203,7 +237,7 @@ public class SectionCRActivity extends AppCompatActivity {
         if (!insertNewRecord()) return;
         if (updateDB()) {
             finish();
-            startActivity(new Intent(this, SectionCRActivity.class)
+            startActivity(new Intent(this, RegisteredChildListActivity.class)
                     .putExtra("dmureg", bi.crDmuRegister.getText().toString())
                     .putExtra("reg", bi.crRegNumber.getText().toString()).putExtra("b", true));
         } else Toast.makeText(this, "Failed to Update Database!", Toast.LENGTH_SHORT).show();
@@ -230,9 +264,10 @@ public class SectionCRActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED);
         // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
         finish();
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, RegisteredChildListActivity.class));
     }
 
     @Override

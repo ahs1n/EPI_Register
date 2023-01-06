@@ -199,7 +199,7 @@ public class SyncActivity extends AppCompatActivity {
                     downloadTables.add(new SyncModel(VersionTable.TABLE_NAME));
                 } else {
                     select = " * ";
-                    filter = "cr_dmu_register = " + MainApp.dmuRegNo;
+                    filter = "cr_dmu_register = " + MainApp.syncDMURegNo;
                     downloadTables.add(new SyncModel(FormCRFollowUPTable.TABLE_NAME_API, select, filter));
                 }
 

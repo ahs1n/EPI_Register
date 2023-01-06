@@ -106,6 +106,7 @@
                                 android:orientation="vertical">
 
                                 <EditText
+                                    android:text="user0001"
                                     android:id="@+id/username"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -136,6 +137,7 @@
                                     android:orientation="horizontal">
 
                                     <EditText
+                                        android:text="User0001"
                                         android:id="@+id/password"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
@@ -194,6 +196,7 @@
                                         android:textSize="14dp" />
 
                                     <EditText
+                                        android:text="2"
                                         android:id="@+id/dmuRegNo"
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"

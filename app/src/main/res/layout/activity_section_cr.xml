@@ -96,7 +96,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:text="@string/cr_dmu_register"
+                                android:text="@={form.cr_dmu_register}"
                                 android:textSize="22dp" />
 
                         </LinearLayout>
@@ -141,7 +141,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:text="@string/cr_reg_number"
+                                android:text="@={form.cr_reg_number}"
                                 android:textSize="22dp" />
 
                         </LinearLayout>

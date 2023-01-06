@@ -2,7 +2,6 @@ package edu.aku.hassannaqvi.epi_register.models
 
 import android.database.Cursor
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.FormCRFollowUPTable
-import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.UsersTable
 import org.apache.commons.lang3.StringUtils
 import org.json.JSONException
 import org.json.JSONObject
@@ -12,6 +11,13 @@ import org.json.JSONObject
  */
 class FormCRFollowUP {
     var ID: Long = 0
+    var uID: String = StringUtils.EMPTY
+    var userName: String = StringUtils.EMPTY
+    var sysDate: String = StringUtils.EMPTY
+    var deviceId: String = StringUtils.EMPTY
+    var iStatus: String = StringUtils.EMPTY
+    var endTime: String = StringUtils.EMPTY
+    var startTime: String = StringUtils.EMPTY
     var cr_dmu_register: String = StringUtils.EMPTY
     var cr_reg_number: String = StringUtils.EMPTY
     var cr_page_number: String = StringUtils.EMPTY
@@ -103,6 +109,13 @@ class FormCRFollowUP {
 
     @Throws(JSONException::class)
     fun sync(jsonObject: JSONObject): FormCRFollowUP {
+        uID = jsonObject.getString(FormCRFollowUPTable.COLUMN_UID)
+        userName = jsonObject.getString(FormCRFollowUPTable.COLUMN_USERNAME)
+        sysDate = jsonObject.getString(FormCRFollowUPTable.COLUMN_SYSDATE)
+        deviceId = jsonObject.getString(FormCRFollowUPTable.COLUMN_DEVICEID)
+        iStatus = jsonObject.getString(FormCRFollowUPTable.COLUMN_ISTATUS)
+        endTime = jsonObject.getString(FormCRFollowUPTable.COLUMN_END_TIME)
+        startTime = jsonObject.getString(FormCRFollowUPTable.COLUMN_START_TIME)
         cr_dmu_register = jsonObject.getString(FormCRFollowUPTable.COLUMN_CR_DMU_REGISTER)
         cr_reg_number = jsonObject.getString(FormCRFollowUPTable.COLUMN_CR_REG_NUMBER)
         cr_page_number = jsonObject.getString(FormCRFollowUPTable.COLUMN_CR_PAGE_NUMBER)
@@ -191,7 +204,21 @@ class FormCRFollowUP {
     }
 
     fun hydrate(cursor: Cursor): FormCRFollowUP {
-        ID = cursor.getLong(cursor.getColumnIndexOrThrow(UsersTable.COLUMN_ID))
+        ID = cursor.getLong(cursor.getColumnIndexOrThrow(FormCRFollowUPTable.COLUMN_ID))
+        uID =
+            cursor.getString(cursor.getColumnIndexOrThrow(FormCRFollowUPTable.COLUMN_UID))
+        userName =
+            cursor.getString(cursor.getColumnIndexOrThrow(FormCRFollowUPTable.COLUMN_USERNAME))
+        sysDate =
+            cursor.getString(cursor.getColumnIndexOrThrow(FormCRFollowUPTable.COLUMN_SYSDATE))
+        deviceId =
+            cursor.getString(cursor.getColumnIndexOrThrow(FormCRFollowUPTable.COLUMN_DEVICEID))
+        iStatus =
+            cursor.getString(cursor.getColumnIndexOrThrow(FormCRFollowUPTable.COLUMN_ISTATUS))
+        endTime =
+            cursor.getString(cursor.getColumnIndexOrThrow(FormCRFollowUPTable.COLUMN_END_TIME))
+        startTime =
+            cursor.getString(cursor.getColumnIndexOrThrow(FormCRFollowUPTable.COLUMN_START_TIME))
         cr_dmu_register =
             cursor.getString(cursor.getColumnIndexOrThrow(FormCRFollowUPTable.COLUMN_CR_DMU_REGISTER))
         cr_reg_number =
@@ -352,6 +379,4 @@ class FormCRFollowUP {
             cursor.getString(cursor.getColumnIndexOrThrow(FormCRFollowUPTable.COLUMN_CR_COMMENTS))
         return this
     }
-
-
 }

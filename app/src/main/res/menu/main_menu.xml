@@ -11,15 +11,15 @@
         app:showAsAction="always">
         <menu>
 
+            <item
+                android:id="@+id/action_data_sync"
+                android:title="@string/action_data_sync" />
 
             <item
                 android:id="@+id/action_database"
                 android:title="@string/action_database"
                 android:visible="false"
                 tools:visible="true" />
-            <item
-                android:id="@+id/action_data_sync"
-                android:title="@string/action_data_sync" />
             <item
                 android:id="@+id/changePassword"
                 android:title="Change Password" />

@@ -65,6 +65,12 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".ui.lists.RegisteredChildListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.main"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".ui.sections.SectionWRActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeUrdu"

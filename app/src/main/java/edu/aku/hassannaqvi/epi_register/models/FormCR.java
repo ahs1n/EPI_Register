@@ -30,6 +30,7 @@ public class FormCR extends BaseObservable {
     // APP VARIABLES
     private String id = _EMPTY_;
     private String uid = _EMPTY_;
+    private String uuid = _EMPTY_;
     private String userName = _EMPTY_;
     private String sysDate = _EMPTY_;
     private String deviceId = _EMPTY_;
@@ -167,6 +168,15 @@ public class FormCR extends BaseObservable {
     }
 
 
+    public String getCr() {
+        return cR;
+    }
+
+    public void setCr(String cR) {
+        this.cR = cR;
+    }
+
+
     public String getProjectName() {
         return projectName;
     }
@@ -189,6 +199,14 @@ public class FormCR extends BaseObservable {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getUserName() {
@@ -1373,6 +1391,7 @@ public class FormCR extends BaseObservable {
     public FormCR Hydrate(Cursor cursor) throws JSONException {
         this.id = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_ID));
         this.uid = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_UID));
+        this.uuid = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_UUID));
         this.userName = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_USERNAME));
         this.sysDate = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_SYSDATE));
         this.deviceId = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_DEVICEID));
@@ -1579,6 +1598,7 @@ public class FormCR extends BaseObservable {
         JSONObject json = new JSONObject();
         json.put(FormCRTable.COLUMN_ID, this.id);
         json.put(FormCRTable.COLUMN_UID, this.uid);
+        json.put(FormCRTable.COLUMN_UUID, this.uuid);
         json.put(FormCRTable.COLUMN_USERNAME, this.userName);
         json.put(FormCRTable.COLUMN_SYSDATE, this.sysDate);
         json.put(FormCRTable.COLUMN_DEVICEID, this.deviceId);
@@ -1591,5 +1611,106 @@ public class FormCR extends BaseObservable {
 
         json.put(FormCRTable.COLUMN_CR, new JSONObject(cRtoString()));
         return json;
+    }
+
+    public FormCR HydrateFup(Cursor cursor) throws JSONException {
+        this.id = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_ID));
+        this.uid = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_UID));
+        this.userName = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_USERNAME));
+        this.sysDate = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_SYSDATE));
+        this.deviceId = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_DEVICEID));
+        this.iStatus = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_ISTATUS));
+        this.endTime = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_END_TIME));
+        this.startTime = cursor.getString(cursor.getColumnIndexOrThrow(FormCRTable.COLUMN_START_TIME));
+
+        cRFupHydrate(MainApp.crFollowUP);
+        return this;
+    }
+
+    public void cRFupHydrate(FormCRFollowUP formCR) throws JSONException {
+        this.cr_dmu_register = formCR.getCr_dmu_register();
+        this.cr_reg_number = formCR.getCr_reg_number();
+        this.cr_page_number = formCR.getCr_page_number();
+        this.cr_rsno = formCR.getCr_rsno();
+        this.cr_card_number = formCR.getCr_card_number();
+        this.cr_child_name = formCR.getCr_child_name();
+        this.cr_father_name = formCR.getCr_father_name();
+        this.cr_age_months = formCR.getCr_age_months();
+        this.cr_age_years = formCR.getCr_age_years();
+        this.cr_age_days = formCR.getCr_age_days();
+        this.cr_gender = formCR.getCr_gender();
+        this.cr_address = formCR.getCr_address();
+        this.cr_phone = formCR.getCr_phone();
+        this.cr_phone_na = formCR.getCr_phone_na();
+        this.cr_bcg = formCR.getCr_bcg();
+        this.cr_bcg_d1 = formCR.getCr_bcg_d1();
+        this.cr_bcg_d2 = formCR.getCr_bcg_d2();
+        this.cr_bcg_na = formCR.getCr_bcg_na();
+        this.cr_hep_b = formCR.getCr_hep_b();
+        this.cr_hep_b1 = formCR.getCr_hep_b1();
+        this.cr_hep_b2 = formCR.getCr_hep_b2();
+        this.cr_hep_bna = formCR.getCr_hep_bna();
+        this.cr_opv0 = formCR.getCr_opv0();
+        this.cr_opv0_d1 = formCR.getCr_opv0_d1();
+        this.cr_opv0_d2 = formCR.getCr_opv0_d2();
+        this.cr_opv0_na = formCR.getCr_opv0_na();
+        this.cr_opv1 = formCR.getCr_opv1();
+        this.cr_opv1_d1 = formCR.getCr_opv1_d1();
+        this.cr_opv1_d2 = formCR.getCr_opv1_d2();
+        this.cr_opv1_na = formCR.getCr_opv1_na();
+        this.cr_opv2 = formCR.getCr_opv2();
+        this.cr_opv2_d1 = formCR.getCr_opv2_d1();
+        this.cr_opv2_d2 = formCR.getCr_opv2_d2();
+        this.cr_opv2_na = formCR.getCr_opv2_na();
+        this.cr_opv3 = formCR.getCr_opv3();
+        this.cr_opv3_d1 = formCR.getCr_opv3_d1();
+        this.cr_opv3_d2 = formCR.getCr_opv3_d2();
+        this.cr_opv3_na = formCR.getCr_opv3_na();
+        this.cr_rota1 = formCR.getCr_rota1();
+        this.cr_rota1_d1 = formCR.getCr_rota1_d1();
+        this.cr_rota1_d2 = formCR.getCr_rota1_d2();
+        this.cr_rota1_na = formCR.getCr_rota1_na();
+        this.cr_rota2 = formCR.getCr_rota2();
+        this.cr_rota2_d1 = formCR.getCr_rota2_d1();
+        this.cr_rota2_d2 = formCR.getCr_rota2_d2();
+        this.cr_rota2_na = formCR.getCr_rota2_na();
+        this.cr_ipv = formCR.getCr_ipv();
+        this.cr_ipv_d1 = formCR.getCr_ipv_d1();
+        this.cr_ipv_d2 = formCR.getCr_ipv_d2();
+        this.cr_ipv_na = formCR.getCr_ipv_na();
+        this.cr_pcv1 = formCR.getCr_pcv1();
+        this.cr_pcv1_d1 = formCR.getCr_pcv1_d1();
+        this.cr_pcv1_d2 = formCR.getCr_pcv1_d2();
+        this.cr_pcv1_na = formCR.getCr_pcv1_na();
+        this.cr_pcv2 = formCR.getCr_pcv2();
+        this.cr_pcv2_d1 = formCR.getCr_pcv2_d1();
+        this.cr_pcv2_d2 = formCR.getCr_pcv2_d2();
+        this.cr_pcv2_na = formCR.getCr_pcv2_na();
+        this.cr_pcv3 = formCR.getCr_pcv3();
+        this.cr_pcv3_d1 = formCR.getCr_pcv3_d1();
+        this.cr_pcv3_d2 = formCR.getCr_pcv3_d2();
+        this.cr_pcv3_na = formCR.getCr_pcv3_na();
+        this.cr_penta1 = formCR.getCr_penta1();
+        this.cr_penta1_d1 = formCR.getCr_penta1_d1();
+        this.cr_penta1_d2 = formCR.getCr_penta1_d2();
+        this.cr_penta1_na = formCR.getCr_penta1_na();
+        this.cr_penta2 = formCR.getCr_penta2();
+        this.cr_penta2_d1 = formCR.getCr_penta2_d1();
+        this.cr_penta2_d2 = formCR.getCr_penta2_d2();
+        this.cr_penta2_na = formCR.getCr_penta2_na();
+        this.cr_penta3 = formCR.getCr_penta3();
+        this.cr_penta3_d1 = formCR.getCr_penta3_d1();
+        this.cr_penta3_d2 = formCR.getCr_penta3_d2();
+        this.cr_penta3_na = formCR.getCr_penta3_na();
+        this.cr_measles1 = formCR.getCr_measles1();
+        this.cr_measles1_d1 = formCR.getCr_measles1_d1();
+        this.cr_measles1_d2 = formCR.getCr_measles1_d2();
+        this.cr_measles1_na = formCR.getCr_measles1_na();
+        this.cr_measles2 = formCR.getCr_measles2();
+        this.cr_measles2_d1 = formCR.getCr_measles2_d1();
+        this.cr_measles2_d2 = formCR.getCr_measles2_d2();
+        this.cr_measles2_na = formCR.getCr_measles2_na();
+        this.cr_birth_status = formCR.getCr_birth_status();
+        this.cr_comments = formCR.getCr_comments();
     }
 }

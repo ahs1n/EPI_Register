@@ -34,6 +34,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.EntryLogTable;
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts.FormCRFollowUPTable;
@@ -90,14 +91,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //ADDITION in DB
     public Long addCR(FormCR cr) throws JSONException {
-
-        // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase(DATABASE_PASSWORD);
-
-// Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(FormCRTable.COLUMN_PROJECT_NAME, cr.getProjectName());
         values.put(FormCRTable.COLUMN_UID, cr.getUid());
+        values.put(FormCRTable.COLUMN_UUID, cr.getUuid());
         values.put(FormCRTable.COLUMN_USERNAME, cr.getUserName());
         values.put(FormCRTable.COLUMN_SYSDATE, cr.getSysDate());
         values.put(FormCRTable.COLUMN_ISTATUS, cr.getiStatus());
@@ -106,8 +104,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FormCRTable.COLUMN_APPVERSION, cr.getAppver());
         values.put(FormCRTable.COLUMN_START_TIME, cr.getStartTime());
         values.put(FormCRTable.COLUMN_END_TIME, cr.getEndTime());
-
-        // Put all JSON as xxtoString()
         values.put(FormCRTable.COLUMN_CR, cr.cRtoString());
 
         // Insert the new row, returning the primary key value of the new row
@@ -132,8 +128,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FormWRTable.COLUMN_APPVERSION, wr.getAppver());
         values.put(FormWRTable.COLUMN_START_TIME, wr.getStartTime());
         values.put(FormWRTable.COLUMN_END_TIME, wr.getEndTime());
-
-        // Put all JSON as xxtoString()
         values.put(FormWRTable.COLUMN_WR, wr.wRtoString());
 
         // Insert the new row, returning the primary key value of the new row
@@ -492,6 +486,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             formCRFollowUP.sync(jsonObjectUser);
             ContentValues values = new ContentValues();
 
+            values.put(FormCRFollowUPTable.COLUMN_UID, formCRFollowUP.getUID());
+            values.put(FormCRFollowUPTable.COLUMN_USERNAME, formCRFollowUP.getUserName());
+            values.put(FormCRFollowUPTable.COLUMN_SYSDATE, formCRFollowUP.getSysDate());
+            values.put(FormCRFollowUPTable.COLUMN_DEVICEID, formCRFollowUP.getDeviceId());
+            values.put(FormCRFollowUPTable.COLUMN_ISTATUS, formCRFollowUP.getIStatus());
+            values.put(FormCRFollowUPTable.COLUMN_START_TIME, formCRFollowUP.getStartTime());
+            values.put(FormCRFollowUPTable.COLUMN_END_TIME, formCRFollowUP.getEndTime());
             values.put(FormCRFollowUPTable.COLUMN_CR_DMU_REGISTER, formCRFollowUP.getCr_dmu_register());
             values.put(FormCRFollowUPTable.COLUMN_CR_REG_NUMBER, formCRFollowUP.getCr_reg_number());
             values.put(FormCRFollowUPTable.COLUMN_CR_PAGE_NUMBER, formCRFollowUP.getCr_page_number());
@@ -815,23 +816,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-/*    public void updateSyncedSamp(String id) {
-        SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD)
-        ContentValues values = new ContentValues();
-        values.put(SamplesTable.COLUMN_SYNCED, true);
-        values.put(SamplesTable.COLUMN_SYNCED_DATE, new Date().toString());
-
-        String where = SamplesTable.COLUMN_ID + " = ?";
-        String[] whereArgs = {id};
-
-        int count = db.update(
-                SamplesTable.TABLE_NAME,
-                values,
-                where,
-                whereArgs);
-    }*/
-
-
     public ArrayList<Cursor> getData(String Query) {
         //get writable database
         SQLiteDatabase sqlDB = this.getWritableDatabase(DATABASE_PASSWORD);
@@ -893,21 +877,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 selectionArgs);
     }
 
-
-    /*public FormCRFollowUP getFormCRByDMURegister(String dmuREG, String epiREG) {
+    /*Get all forms in list from FormCRFollowUP*/
+    public List<FormCRFollowUP> getAllChilds() throws JSONException {
         SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
-        Cursor c = null;
+        Cursor c;
         String[] columns = null;
-
-        String whereClause = FormCRFollowUPTable.COLUMN_VILLAGE_CODE + " = ? AND " +
-                FormCRFollowUPTable.COLUMN_SR_NO + " = ?";
-
-        String[] whereArgs = {dmuREG, epiREG};
+        String whereClause = null;
+        String[] whereArgs = null;
         String groupBy = null;
         String having = null;
-        String orderBy = FormCRFollowUPTable.COLUMN_SR_NO + " ASC";
 
-        FormCRFollowUP formCRFollowUP = new AdolList();
+        String orderBy = FormCRFollowUPTable.COLUMN_ID + " ASC";
+        List<FormCRFollowUP> allForm = new ArrayList<>();
+
         c = db.query(
                 FormCRFollowUPTable.TABLE_NAME,  // The table to query
                 columns,                   // The columns to return
@@ -918,28 +900,57 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 orderBy                    // The sort order
         );
         while (c.moveToNext()) {
-            formCRFollowUP = new FormCRFollowUP().hydrate(c);
+            FormCRFollowUP formCRFollowUP = new FormCRFollowUP().hydrate(c);
+            allForm.add(formCRFollowUP);
         }
-        return formCRFollowUP;
-    }*/
+        c.close();
+        return allForm;
+    }
 
-
-    /*public FormWRFollowUP getFormWRByDMURegister(String dmuREG, String epiREG) {
+    /*Open form from list OnClick*/
+    public FormCRFollowUP getSelectedMembers(String cardNo, String dmuReg, String pageNo) throws JSONException {
         SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
-        Cursor c = null;
+        Cursor c;
         String[] columns = null;
-
-        String whereClause = FormWRFollowUPTable.COLUMN_VILLAGE_CODE + " = ? AND " +
-                FormWRFollowUPTable.COLUMN_SR_NO + " = ?";
-
-        String[] whereArgs = {dmuREG, epiREG};
+        String whereClause = FormCRFollowUPTable.COLUMN_CR_CARD_NUMBER + " = ? AND " +
+                FormCRFollowUPTable.COLUMN_CR_DMU_REGISTER + " = ? AND " + FormCRFollowUPTable.COLUMN_CR_PAGE_NUMBER + " = ? ";
+        String[] whereArgs = new String[]{cardNo, dmuReg, pageNo};
         String groupBy = null;
         String having = null;
-        String orderBy = FormWRFollowUPTable.COLUMN_SR_NO + " ASC";
-
-        FormWRFollowUP formWRFollowUP = new AdolList();
+        String orderBy = FormCRFollowUPTable.COLUMN_ID + " ASC";
+        FormCRFollowUP formCRFollowUP = new FormCRFollowUP();
         c = db.query(
-                FormWRFollowUPTable.TABLE_NAME,  // The table to query
+                FormCRFollowUPTable.TABLE_NAME,  // The table to query
+                columns,                   // The columns to return
+                whereClause,               // The columns for the WHERE clause
+                whereArgs,                 // The values for the WHERE clause
+                groupBy,                   // don't group the rows
+                having,                    // don't filter by row groups
+                orderBy                    // The sort order
+        );
+        while (c.moveToNext()) formCRFollowUP = new FormCRFollowUP().hydrate(c);
+        c.close();
+        return formCRFollowUP;
+    }
+
+    /*Search Child from list by Name*/
+    public List<FormCRFollowUP> getAllChildsByName(String childName) throws JSONException {
+        SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
+        Cursor c;
+        String[] columns = null;
+
+        String whereClause = FormCRFollowUPTable.COLUMN_CR_CHILD_NAME + " = ? ";
+        String[] whereArgs = new String[]{childName};
+        String groupBy = null;
+        String having = null;
+
+        String orderBy =
+                FormCRFollowUPTable.COLUMN_ID + " ASC";
+
+        List<FormCRFollowUP> allForm = new ArrayList<>();
+
+        c = db.query(
+                FormCRFollowUPTable.TABLE_NAME,  // The table to query
                 columns,                   // The columns to return
                 whereClause,               // The columns for the WHERE clause
                 whereArgs,                 // The values for the WHERE clause
@@ -948,8 +959,109 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 orderBy                    // The sort order
         );
         while (c.moveToNext()) {
-            formWRFollowUP = new FormWRFollowUP().hydrate(c);
+            FormCRFollowUP formCRFollowUP = new FormCRFollowUP().hydrate(c);
+            allForm.add(formCRFollowUP);
         }
-        return formWRFollowUP;
-    }*/
+        c.close();
+        return allForm;
+    }
+
+    /*Search Child from list by Card No*/
+    public List<FormCRFollowUP> getAllChildsByCardNo(String cardNo) throws JSONException {
+        SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
+        Cursor c;
+        String[] columns = null;
+
+        String whereClause = FormCRFollowUPTable.COLUMN_CR_CARD_NUMBER + " = ? ";
+        String[] whereArgs = new String[]{cardNo};
+        String groupBy = null;
+        String having = null;
+
+        String orderBy =
+                FormCRFollowUPTable.COLUMN_ID + " ASC";
+
+        List<FormCRFollowUP> allForm = new ArrayList<>();
+
+        c = db.query(
+                FormCRFollowUPTable.TABLE_NAME,  // The table to query
+                columns,                   // The columns to return
+                whereClause,               // The columns for the WHERE clause
+                whereArgs,                 // The values for the WHERE clause
+                groupBy,                   // don't group the rows
+                having,                    // don't filter by row groups
+                orderBy                    // The sort order
+        );
+        while (c.moveToNext()) {
+            FormCRFollowUP cr = new FormCRFollowUP().hydrate(c);
+            allForm.add(cr);
+        }
+        c.close();
+        return allForm;
+    }
+
+    /*Update entered member from FormCRFollowUP Table*/
+    public List<FormCR> getRegisteredMembers(String cardNo, String dmuReg, String pageNo) throws JSONException {
+        SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
+        Cursor c = null;
+        String[] columns = null;
+        String whereClause = FormCRFollowUPTable.COLUMN_CR_CARD_NUMBER + " = ? AND " +
+                FormCRFollowUPTable.COLUMN_CR_DMU_REGISTER + " = ? AND " + FormCRFollowUPTable.COLUMN_CR_PAGE_NUMBER + " = ? ";
+        String[] whereArgs = {cardNo, dmuReg, pageNo};
+        String groupBy = null;
+        String having = null;
+        String orderBy = FormCRFollowUPTable.COLUMN_ID + " ASC";
+
+        List<FormCR> formCRFollowUPS = new ArrayList<>();
+        c = db.query(
+                FormCRFollowUPTable.TABLE_NAME,  // The table to query
+                columns,                   // The columns to return
+                whereClause,               // The columns for the WHERE clause
+                whereArgs,                 // The values for the WHERE clause
+                groupBy,                   // don't group the rows
+                having,                    // don't filter by row groups
+                orderBy                    // The sort order
+        );
+        while (c.moveToNext()) {
+            formCRFollowUPS.add(new FormCR().HydrateFup(c));
+        }
+
+        if (c != null && !c.isClosed()) {
+            c.close();
+        }
+        c.close();
+        return formCRFollowUPS;
+    }
+
+    /*Update entered member from FormCR Table*/
+    public FormCR getRegisteredMembersFormCR(String uuid) throws JSONException {
+        SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
+        Cursor c = null;
+        String[] columns = null;
+        String whereClause = FormCRTable.COLUMN_UUID + " = ? ";
+        String[] whereArgs = {uuid};
+        String groupBy = null;
+        String having = null;
+        String orderBy = FormCRTable.COLUMN_ID + " ASC";
+
+        FormCR formCRFollowUPS = null;
+        c = db.query(
+                FormCRTable.TABLE_NAME,  // The table to query
+                columns,                   // The columns to return
+                whereClause,               // The columns for the WHERE clause
+                whereArgs,                 // The values for the WHERE clause
+                groupBy,                   // don't group the rows
+                having,                    // don't filter by row groups
+                orderBy                    // The sort order
+        );
+        while (c.moveToNext()) {
+            formCRFollowUPS = new FormCR().Hydrate(c);
+        }
+
+        if (c != null && !c.isClosed()) {
+            c.close();
+        }
+        c.close();
+        return formCRFollowUPS;
+    }
+
 }

@@ -139,4 +139,7 @@ dependencies {
 
     // Android Database Browser
     debugImplementation 'com.github.amitshekhariitbhu.Android-Debug-Database:debug-db-encrypt:v1.0.6'
+
+    //SDP
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
 }

@@ -16,10 +16,12 @@ import edu.aku.hassannaqvi.epi_register.core.MainApp;
 import edu.aku.hassannaqvi.epi_register.database.AndroidManager;
 import edu.aku.hassannaqvi.epi_register.databinding.ActivityMainBinding;
 import edu.aku.hassannaqvi.epi_register.models.FormCR;
+import edu.aku.hassannaqvi.epi_register.models.FormCRFollowUP;
 import edu.aku.hassannaqvi.epi_register.models.FormWR;
 import edu.aku.hassannaqvi.epi_register.ui.ChangePasswordActivity;
+import edu.aku.hassannaqvi.epi_register.ui.LoginActivity;
 import edu.aku.hassannaqvi.epi_register.ui.SyncActivity;
-import edu.aku.hassannaqvi.epi_register.ui.sections.SectionCRActivity;
+import edu.aku.hassannaqvi.epi_register.ui.lists.RegisteredChildListActivity;
 import edu.aku.hassannaqvi.epi_register.ui.sections.SectionWRActivity;
 
 
@@ -51,10 +53,14 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.openChildForm:
                 MainApp.cr = new FormCR();
+                MainApp.crFollowUP = new FormCRFollowUP();
                 finish();
-                startActivity(new Intent(this, SectionCRActivity.class)
+                startActivity(new Intent(this, RegisteredChildListActivity.class)
                         .putExtra("dmureg", bi.dmureg.getText().toString())
                         .putExtra("reg", bi.reg.getText().toString()));
+/*                startActivity(new Intent(this, SectionCRActivity.class)
+                        .putExtra("dmureg", bi.dmureg.getText().toString())
+                        .putExtra("reg", bi.reg.getText().toString()));*/
                 break;
             case R.id.openWomenForm:
                 MainApp.wr = new FormWR();
@@ -96,9 +102,16 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         MenuItem action_database = menu.findItem(R.id.action_database);
 
-//        action_database.setVisible(MainApp.admin);
+        action_database.setVisible(MainApp.admin);
         action_database.setVisible(true);
         return true;
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
+        finish();
+        startActivity(new Intent(this, LoginActivity.class));
     }
 }
