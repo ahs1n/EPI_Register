@@ -102,8 +102,8 @@ public class RegisteredChildListActivity extends AppCompatActivity {
             }
         });
 
-        String dmuReg = getIntent().getStringExtra("dmureg");
-        String reg = getIntent().getStringExtra("reg");
+        /*String dmuReg = getIntent().getStringExtra("dmureg");
+        String reg = getIntent().getStringExtra("reg");*/
     }
 
     @Override
@@ -116,8 +116,6 @@ public class RegisteredChildListActivity extends AppCompatActivity {
     private void addMoreMember() {
         MainApp.cr = new FormCR();
         Intent intent = new Intent(this, SectionCRActivity.class)
-                .putExtra("dmureg", getIntent().getStringExtra("dmureg"))
-                .putExtra("reg", getIntent().getStringExtra("reg"))
                 .putExtra("new", true);
         finish();
         MemberInfoLauncher.launch(intent);

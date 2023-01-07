@@ -97,6 +97,8 @@ public class MainApp extends Application {
     static ToneGenerator toneGen1;
 
     public static String syncDMURegNo;
+    public static String dmureg;
+    public static String reg;
     public static List<FormCR> formCRList;
     public static List<FormCRFollowUP> formCRFupList;
     public static FormCRFollowUP crFollowUP;

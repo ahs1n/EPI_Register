@@ -162,9 +162,6 @@ public class FormCR extends BaseObservable {
         setProjectName(PROJECT_NAME);
         setEndTime(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(new Date().getTime()));
 
-//        setCr_dmu_register(MainApp.cr.cr_dmu_register);
-//        setCr_reg_number(MainApp.cr.cr_reg_number);
-
     }
 
 

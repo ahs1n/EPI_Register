@@ -61,8 +61,8 @@ public class SectionCRActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate(registeredMemberList): " + formCrList.size());
 
-        String dmuReg = getIntent().getStringExtra("dmureg");
-        String reg = getIntent().getStringExtra("reg");
+/*        String dmuReg = getIntent().getStringExtra("dmureg");
+        String reg = getIntent().getStringExtra("reg");*/
         boolean isNew = getIntent().getBooleanExtra("new", false);
 
         try {
@@ -76,8 +76,10 @@ public class SectionCRActivity extends AppCompatActivity {
                     cr.setUid("");
                 }
             } else {
-                cr.setCr_dmu_register(dmuReg);
-                cr.setCr_reg_number(reg);
+                cr.setCr_dmu_register(MainApp.dmureg);
+                cr.setCr_reg_number(MainApp.reg);
+                /*bi.crDmuRegister.setText(MainApp.dmureg);
+                bi.crRegNumber.setText(MainApp.reg);*/
             }
 
         } catch (Exception e) {
@@ -88,8 +90,8 @@ public class SectionCRActivity extends AppCompatActivity {
         if (b) cr = new FormCR();
         bi.setForm(cr);
 
-        bi.crDmuRegister.setText(dmuReg);
-        bi.crRegNumber.setText(reg);
+        bi.crDmuRegister.setText(MainApp.dmureg);
+        bi.crRegNumber.setText(MainApp.reg);
 //        cr.setCr_dmu_register(dmuReg);
 //        cr.setCr_reg_number(reg);
 

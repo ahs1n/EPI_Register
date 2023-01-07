@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 MainApp.cr = new FormCR();
                 MainApp.crFollowUP = new FormCRFollowUP();
                 finish();
-                startActivity(new Intent(this, RegisteredChildListActivity.class)
-                        .putExtra("dmureg", bi.dmureg.getText().toString())
-                        .putExtra("reg", bi.reg.getText().toString()));
+                MainApp.dmureg = bi.dmureg.getText().toString();
+                MainApp.reg = bi.reg.getText().toString();
+                startActivity(new Intent(this, RegisteredChildListActivity.class));
 /*                startActivity(new Intent(this, SectionCRActivity.class)
                         .putExtra("dmureg", bi.dmureg.getText().toString())
                         .putExtra("reg", bi.reg.getText().toString()));*/
