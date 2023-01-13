@@ -58,6 +58,7 @@
                 <!-- search options -->
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -115,6 +116,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:onClick="filterForms"
+                        android:visibility="gone"
                         android:src="@drawable/search" />
                 </LinearLayout>
 

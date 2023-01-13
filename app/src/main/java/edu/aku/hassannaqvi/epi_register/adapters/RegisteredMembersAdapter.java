@@ -59,7 +59,9 @@ public class RegisteredMembersAdapter extends RecyclerView.Adapter<RegisteredMem
         } else {
             formCRFollowUPS.clear();
             for (FormCRFollowUP formCRFollowUP : backupItems) {
-                if (formCRFollowUP.getCr_card_number().toLowerCase().contains(query) || formCRFollowUP.getCr_child_name().toLowerCase().contains(query)) {
+                if (formCRFollowUP.getCr_card_number().toLowerCase().contains(query) ||
+                        formCRFollowUP.getCr_child_name().toLowerCase().contains(query) ||
+                        formCRFollowUP.getCr_page_number().contains(query)) {
                     formCRFollowUPS.add(formCRFollowUP);
                 }
             }
