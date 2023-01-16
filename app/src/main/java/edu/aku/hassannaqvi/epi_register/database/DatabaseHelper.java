@@ -1000,4 +1000,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return formCRFollowUPS;
     }
 
+    /*Get all formCR*/
+    public List<FormCR> getAllFormCR() throws JSONException {
+        SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
+        Cursor c;
+        String[] columns = null;
+        String whereClause = null;
+        String[] whereArgs = null;
+        String groupBy = null;
+        String having = null;
+
+        String orderBy = FormCRTable.COLUMN_ID + " ASC";
+        List<FormCR> allForm = new ArrayList<>();
+
+        c = db.query(
+                FormCRTable.TABLE_NAME,  // The table to query
+                columns,                   // The columns to return
+                whereClause,               // The columns for the WHERE clause
+                whereArgs,                 // The values for the WHERE clause
+                groupBy,                   // don't group the rows
+                having,                    // don't filter by row groups
+                orderBy                    // The sort order
+        );
+        while (c.moveToNext()) {
+            allForm.add(new FormCR().Hydrate(c));
+        }
+        c.close();
+        return allForm;
+    }
+
 }

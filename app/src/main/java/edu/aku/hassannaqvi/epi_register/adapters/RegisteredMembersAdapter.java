@@ -84,6 +84,8 @@ public class RegisteredMembersAdapter extends RecyclerView.Adapter<RegisteredMem
         TextView fatherName = viewHolder.fatherName;
         TextView cardNo = viewHolder.cardNo;
         ImageView mainIcon = viewHolder.mainIcon;
+        TextView dmuReg = viewHolder.dmuReg;
+        TextView pageNo = viewHolder.pageNo;
 
         fName.setText(formCRFollowUP.getCr_child_name());
         fAgeD.setText(formCRFollowUP.getCr_age_days() + " D ");
@@ -91,6 +93,8 @@ public class RegisteredMembersAdapter extends RecyclerView.Adapter<RegisteredMem
         fAgeY.setText(formCRFollowUP.getCr_age_years() + " Y ");
         fatherName.setText("Father Name: " + formCRFollowUP.getCr_father_name());
         cardNo.setText("Card No: " + formCRFollowUP.getCr_card_number());
+        dmuReg.setText("Dmu Reg: " + formCRFollowUP.getCr_dmu_register());
+        pageNo.setText("Page No: " + formCRFollowUP.getCr_page_number());
         mainIcon.setImageResource(formCRFollowUP.getCr_gender().equals("1") ? R.drawable.malebabyicon : R.drawable.femalebabyicon);
         viewHolder.itemView.setOnClickListener(view -> onItemClickListener.onItemClick(this.formCRFollowUPS.get(position)));
     }
@@ -125,6 +129,8 @@ public class RegisteredMembersAdapter extends RecyclerView.Adapter<RegisteredMem
         private final TextView fatherName;
         private final TextView cardNo;
         private final ImageView mainIcon;
+        private final TextView dmuReg;
+        private final TextView pageNo;
 
 
         public ViewHolder(View v) {
@@ -136,6 +142,8 @@ public class RegisteredMembersAdapter extends RecyclerView.Adapter<RegisteredMem
             fatherName = v.findViewById(R.id.fName);
             cardNo = v.findViewById(R.id.cardNo);
             mainIcon = v.findViewById(R.id.mainIcon);
+            dmuReg = v.findViewById(R.id.dmuReg);
+            pageNo = v.findViewById(R.id.pageNo);
 
         }
 

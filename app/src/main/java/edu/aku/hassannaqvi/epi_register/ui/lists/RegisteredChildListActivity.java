@@ -2,6 +2,7 @@ package edu.aku.hassannaqvi.epi_register.ui.lists;
 
 import static edu.aku.hassannaqvi.epi_register.core.MainApp.crFollowUP;
 import static edu.aku.hassannaqvi.epi_register.core.MainApp.formCRFupList;
+import static edu.aku.hassannaqvi.epi_register.core.MainApp.formCRList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -23,6 +24,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.aku.hassannaqvi.epi_register.MainActivity;
 import edu.aku.hassannaqvi.epi_register.R;
 import edu.aku.hassannaqvi.epi_register.adapters.RegisteredMembersAdapter;
@@ -30,6 +34,7 @@ import edu.aku.hassannaqvi.epi_register.core.MainApp;
 import edu.aku.hassannaqvi.epi_register.database.DatabaseHelper;
 import edu.aku.hassannaqvi.epi_register.databinding.ActivityRegisteredListChildBinding;
 import edu.aku.hassannaqvi.epi_register.models.FormCR;
+import edu.aku.hassannaqvi.epi_register.models.FormCRFollowUP;
 import edu.aku.hassannaqvi.epi_register.ui.sections.SectionCRActivity;
 
 
@@ -67,6 +72,29 @@ public class RegisteredChildListActivity extends AppCompatActivity {
         }
 
         initSearchFilter();
+
+        try {
+            MainApp.formCRList = db.getAllFormCR();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        int count = 0;
+        if (formCRFupList != null && formCRFupList.size() > 0 &&
+                formCRList != null && formCRList.size() > 0) {
+            List<FormCRFollowUP> _tempList = new ArrayList<>(formCRFupList);
+            for (int i = 0; i < formCRFupList.size(); i++) {
+                if (count == formCRList.size()) break;
+                for (int j = 0; j < formCRList.size(); j++) {
+                    if (formCRFupList.get(i).getUID().equals(formCRList.get(j).getUuid())) {
+                        _tempList.remove(formCRFupList.get(i));
+                        count++;
+                        break;
+                    }
+                }
+            }
+            formCRFupList = _tempList;
+        }
 
         registeredMembersAdapter = new RegisteredMembersAdapter(this, formCRFupList, member -> {
             try {
