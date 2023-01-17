@@ -50,7 +50,7 @@ public class RegisteredMembersAdapter extends RecyclerView.Adapter<RegisteredMem
 
     // Add filter
     @SuppressLint("NotifyDataSetChanged")
-    public void filter(String query) {
+    public void filterCardNo(String query) {
         if (query.equals("")) {
             // Show original list
             formCRFollowUPS.clear();
@@ -59,9 +59,43 @@ public class RegisteredMembersAdapter extends RecyclerView.Adapter<RegisteredMem
         } else {
             formCRFollowUPS.clear();
             for (FormCRFollowUP formCRFollowUP : backupItems) {
-                if (formCRFollowUP.getCr_card_number().toLowerCase().contains(query) ||
-                        formCRFollowUP.getCr_child_name().toLowerCase().contains(query) ||
-                        formCRFollowUP.getCr_page_number().contains(query)) {
+                if (formCRFollowUP.getCr_card_number().toLowerCase().contains(query)) {
+                    formCRFollowUPS.add(formCRFollowUP);
+                }
+            }
+            notifyDataSetChanged();
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterChildName(String query) {
+        if (query.equals("")) {
+            // Show original list
+            formCRFollowUPS.clear();
+            formCRFollowUPS.addAll(backupItems);
+            notifyDataSetChanged();
+        } else {
+            formCRFollowUPS.clear();
+            for (FormCRFollowUP formCRFollowUP : backupItems) {
+                if (formCRFollowUP.getCr_child_name().toLowerCase().contains(query)) {
+                    formCRFollowUPS.add(formCRFollowUP);
+                }
+            }
+            notifyDataSetChanged();
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterPageNo(String query) {
+        if (query.equals("")) {
+            // Show original list
+            formCRFollowUPS.clear();
+            formCRFollowUPS.addAll(backupItems);
+            notifyDataSetChanged();
+        } else {
+            formCRFollowUPS.clear();
+            for (FormCRFollowUP formCRFollowUP : backupItems) {
+                if (formCRFollowUP.getCr_page_number().contains(query)) {
                     formCRFollowUPS.add(formCRFollowUP);
                 }
             }

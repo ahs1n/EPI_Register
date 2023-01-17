@@ -123,9 +123,14 @@ public class RegisteredChildListActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (bi.searchByName.isChecked()) {
+                    bi.memberId.setText(null);
                     bi.memberId.setHint("Name");
+                } else if (bi.searchByPageNo.isChecked()) {
+                    bi.memberId.setText(null);
+                    bi.memberId.setHint("Page No");
                 } else {
-                    bi.memberId.setHint("Card No.");
+                    bi.memberId.setText(null);
+                    bi.memberId.setHint("Card No");
                 }
             }
         });
@@ -224,14 +229,23 @@ public class RegisteredChildListActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                registeredMembersAdapter.filter(s.toString());
+                if (bi.searchByPageNo.isChecked()) {
+                    registeredMembersAdapter.filterPageNo(s.toString());
+                } else if (bi.searchByName.isChecked()) {
+                    registeredMembersAdapter.filterChildName(s.toString());
+                } else registeredMembersAdapter.filterCardNo(s.toString());
             }
         });
 
         bi.memberId.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                registeredMembersAdapter.filter(v.getText().toString());
+                if (bi.searchByPageNo.isChecked()) {
+                    registeredMembersAdapter.filterPageNo(v.getText().toString());
+                } else if (bi.searchByName.isChecked()) {
+                    registeredMembersAdapter.filterChildName(v.getText().toString());
+                } else registeredMembersAdapter.filterCardNo(v.getText().toString());
+
                 return true;
             }
         });

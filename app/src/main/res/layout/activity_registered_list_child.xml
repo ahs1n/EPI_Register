@@ -58,7 +58,6 @@
                 <!-- search options -->
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -83,6 +82,14 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Search by Name"
+                            android:textColor="@color/black" />
+
+                        <RadioButton
+                            android:id="@+id/searchByPageNo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Search with Page No"
                             android:textColor="@color/black" />
                     </RadioGroup>
                 </LinearLayout>

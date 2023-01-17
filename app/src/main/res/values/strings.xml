@@ -31,7 +31,7 @@
     <string name="newVer">New Version</string>
     <string name="downloading">Downloading</string>
     <string name="available">Available</string>
-    <string name="downError">Cant download.. Internet connectivity issue!</string>
+    <string name="downError">Can`t download.. Internet connectivity issue!</string>
     <string name="backBtn">Press Back again to Exit</string>
     <string name="noNetwork">No network connection available!</string>
     <string name="appAvailable">APP is available!</string>
