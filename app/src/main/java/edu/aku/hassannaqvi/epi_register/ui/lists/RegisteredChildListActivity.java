@@ -98,7 +98,7 @@ public class RegisteredChildListActivity extends AppCompatActivity {
 
         registeredMembersAdapter = new RegisteredMembersAdapter(this, formCRFupList, member -> {
             try {
-                MainApp.crFollowUP = db.getSelectedMembers(member.getCr_card_number(), member.getCr_dmu_register(), member.getCr_page_number());
+                MainApp.crFollowUP = db.getSelectedMembers(member.getUID(), member.getCr_card_number(), member.getCr_dmu_register(), member.getCr_page_number());
                 Toast.makeText(RegisteredChildListActivity.this,
                         "Selected Member\n Card No: "
                                 + member.getCr_card_number() + "\nName: "
@@ -164,7 +164,7 @@ public class RegisteredChildListActivity extends AppCompatActivity {
             registeredMembersAdapter = new RegisteredMembersAdapter(this, formCRFupList, member -> {
 
                 try {
-                    crFollowUP = db.getSelectedMembers(member.getCr_card_number(), member.getCr_dmu_register(), member.getCr_page_number());
+                    crFollowUP = db.getSelectedMembers(member.getUID(), member.getCr_card_number(), member.getCr_dmu_register(), member.getCr_page_number());
                     Toast.makeText(RegisteredChildListActivity.this,
                             "Selected Member\n Card No: "
                                     + member.getCr_card_number() + "\nName: "
@@ -184,7 +184,7 @@ public class RegisteredChildListActivity extends AppCompatActivity {
             registeredMembersAdapter = new RegisteredMembersAdapter(this, formCRFupList, member -> {
 
                 try {
-                    crFollowUP = db.getSelectedMembers(member.getCr_card_number(), member.getCr_dmu_register(), member.getCr_page_number());
+                    crFollowUP = db.getSelectedMembers(member.getUID(), member.getCr_card_number(), member.getCr_dmu_register(), member.getCr_page_number());
                     Toast.makeText(RegisteredChildListActivity.this,
                             "Selected Member\n Card No: "
                                     + member.getCr_card_number() + "\nName: "

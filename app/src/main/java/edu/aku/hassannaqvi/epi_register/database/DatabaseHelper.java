@@ -844,13 +844,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*Open form from list OnClick*/
-    public FormCRFollowUP getSelectedMembers(String cardNo, String dmuReg, String pageNo) throws JSONException {
+    public FormCRFollowUP getSelectedMembers(String uid, String cardNo, String dmuReg, String pageNo) throws JSONException {
         SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
         Cursor c;
         String[] columns = null;
-        String whereClause = FormCRFollowUPTable.COLUMN_CR_CARD_NUMBER + " = ? AND " +
+        String whereClause = FormCRFollowUPTable.COLUMN_UID + " = ? AND " + FormCRFollowUPTable.COLUMN_CR_CARD_NUMBER + " = ? AND " +
                 FormCRFollowUPTable.COLUMN_CR_DMU_REGISTER + " = ? AND " + FormCRFollowUPTable.COLUMN_CR_PAGE_NUMBER + " = ? ";
-        String[] whereArgs = new String[]{cardNo, dmuReg, pageNo};
+        String[] whereArgs = new String[]{uid, cardNo, dmuReg, pageNo};
         String groupBy = null;
         String having = null;
         String orderBy = FormCRFollowUPTable.COLUMN_ID + " ASC";
@@ -936,13 +936,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*Update entered member from FormCRFollowUP Table*/
-    public List<FormCR> getRegisteredMembers(String cardNo, String dmuReg, String pageNo) throws JSONException {
+    public List<FormCR> getRegisteredMembers(String uid, String cardNo, String dmuReg, String pageNo) throws JSONException {
         SQLiteDatabase db = this.getReadableDatabase(DATABASE_PASSWORD);
         Cursor c = null;
         String[] columns = null;
-        String whereClause = FormCRFollowUPTable.COLUMN_CR_CARD_NUMBER + " = ? AND " +
+        String whereClause = FormCRFollowUPTable.COLUMN_UID + " = ? AND " + FormCRFollowUPTable.COLUMN_CR_CARD_NUMBER + " = ? AND " +
                 FormCRFollowUPTable.COLUMN_CR_DMU_REGISTER + " = ? AND " + FormCRFollowUPTable.COLUMN_CR_PAGE_NUMBER + " = ? ";
-        String[] whereArgs = {cardNo, dmuReg, pageNo};
+        String[] whereArgs = {uid, cardNo, dmuReg, pageNo};
         String groupBy = null;
         String having = null;
         String orderBy = FormCRFollowUPTable.COLUMN_ID + " ASC";

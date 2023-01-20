@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import edu.aku.hassannaqvi.epi_register.MainActivity;
 import edu.aku.hassannaqvi.epi_register.R;
 import edu.aku.hassannaqvi.epi_register.contracts.TableContracts;
 import edu.aku.hassannaqvi.epi_register.core.MainApp;
@@ -71,13 +70,24 @@ public class SectionCRActivity extends AppCompatActivity {
             if (!isNew) {
                 cr = db.getRegisteredMembersFormCR(crFollowUP.getUID());
                 if (cr == null) {
-                    cr = db.getRegisteredMembers(crFollowUP.getCr_card_number(), crFollowUP.getCr_dmu_register(), crFollowUP.getCr_page_number()).get(0);
-                    cr.setUuid(cr.getUid());
+                    cr = db.getRegisteredMembers(crFollowUP.getUID(), crFollowUP.getCr_card_number(), crFollowUP.getCr_dmu_register(), crFollowUP.getCr_page_number()).get(0);
+                    cr.setUuid(crFollowUP.getUID());
                     cr.setUid("");
                 }
             } else {
                 cr.setCr_dmu_register(MainApp.dmureg);
                 cr.setCr_reg_number(MainApp.reg);
+
+                if (MainApp.crAddress.trim().equals(""))
+                    bi.crAddressPrevious.setVisibility(View.GONE);
+                bi.crAddressPrevious.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    if (isChecked) {
+                        bi.crAddress.setText(MainApp.crAddress);
+                    } else {
+                        bi.crAddress.setText("");
+
+                    }
+                });
                 /*bi.crDmuRegister.setText(MainApp.dmureg);
                 bi.crRegNumber.setText(MainApp.reg);*/
             }
@@ -95,7 +105,7 @@ public class SectionCRActivity extends AppCompatActivity {
 //        cr.setCr_dmu_register(dmuReg);
 //        cr.setCr_reg_number(reg);
 
-        if (MainApp.crAddress.trim().equals(""))
+/*        if (MainApp.crAddress.trim().equals(""))
             bi.crAddressPrevious.setVisibility(View.GONE);
         bi.crAddressPrevious.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -104,7 +114,7 @@ public class SectionCRActivity extends AppCompatActivity {
                 bi.crAddress.setText("");
 
             }
-        });
+        });*/
 
     }
 
@@ -248,7 +258,7 @@ public class SectionCRActivity extends AppCompatActivity {
 
     public void btnEnd(View view) {
         finish();
-        startActivity(new Intent(this, MainActivity.class));
+//        startActivity(new Intent(this, MainActivity.class));
     }
 
 
@@ -269,7 +279,7 @@ public class SectionCRActivity extends AppCompatActivity {
         setResult(Activity.RESULT_CANCELED);
         // Toast.makeText(getApplicationContext(), "Back Press Not Allowed", Toast.LENGTH_LONG).show();
         finish();
-        startActivity(new Intent(this, RegisteredChildListActivity.class));
+//        startActivity(new Intent(this, RegisteredChildListActivity.class));
     }
 
     @Override

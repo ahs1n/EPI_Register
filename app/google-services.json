@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "7893314479",
+    "project_id": "epi-register",
+    "storage_bucket": "epi-register.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7893314479:android:bf9aca9f468bca4cafdd5a",
+        "android_client_info": {
+          "package_name": "edu.aku.hassannaqvi.epi_register"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7893314479-rq3oealmon1obqhrnohr4m0jhihjisfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbnCll3j13VKsaHPWNLiPnJ7gSTRMxrHk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7893314479-rq3oealmon1obqhrnohr4m0jhihjisfv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
